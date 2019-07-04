@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap-reboot.css">
+    <link rel="stylesheet" href="style.css">
+    <title>Modules</title>
+</head>
+
+<body>
+
+    <h2>Modules</h2>
+    <p>View console for more details</p>
+    <button class="btn">Click</button>
+
+    <!-- No need to load the export module script -->
+    <!-- <script type="module" src="/modules/appmod.mjs"></script> -->
+
+    <!-- Load the script that imports the modules with type="module"-->
+    <!-- note: the type property is not needed when using bundlers like webpack or parcel -->
+    <script src="app.js" type="module"></script>
+
+    <!-- serve this script if module not supported by browser -->
+    <!-- <script nomodule src="fallback.js"></script> -->
+
+    <!-- <script src="classic.js"></script> -->
+    <!-- <script src="classic.js"></script> -->
+    <!-- classic.js executes multiple times. -->
+
+    <!-- <script type="module" src="module.mjs"></script> -->
+    <!-- <script type="module" src="module.mjs"></script> -->
+    <!-- <script type="module">import './module.mjs';</script> -->
+    <!-- module.mjs executes only once. -->
+
+    <!-- module scripts and their dependencies are fetched with CORS -->
+
+    <!-- 'defer' - Modules are deferred by default. This Boolean attribute is set to indicate to a browser that the script is meant to be executed after the document has been parsed, but before firing DOMContentLoaded. Scripts with the defer attribute will prevent the DOMContentLoaded event from firing until the script has loaded and finished evaluating. -->
+    <!-- Classic scripts (not modules) are executed immediately and block the HTML parser so we can add 'defer' to them to process the script after parsing has completed-->
+    <!-- 'async' - This is a Boolean attribute indicating that the browser should, if possible, load the script asynchronously. Browsers usually assume the worst case scenario and load scripts synchronously, (i.e. async="false") during HTML parsing. Dynamically inserted <script> tags (using document.createElement()) load asynchronously by default. -->
+    <!-- There are several ways an external script can be executed:
+        >If async is present: The script is executed asynchronously with the rest of the page (the script will be executed while the page continues the parsing)
+        >If async is not present and defer is present: The script is executed when the page has finished parsing
+        >If neither async or defer is present: The script is fetched and executed immediately, before the browser continues parsing the page -->
+    <script src="./normalscript.js"></script>
+</body>
+
+</html>

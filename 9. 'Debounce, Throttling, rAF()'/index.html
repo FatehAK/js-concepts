@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap-reboot.css">
+    <link rel="stylesheet" href="style.css">
+    <title>Debounce, Throttling</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="debounce">
+            <h3>Debouncing</h3>
+            <input type="text" class="debounce-input" placeholder="type somehing"><br />
+            <button class="dbutton">Debounce!!</button>
+        </div>
+        <hr>
+        <div class="throttle-container">
+            <h3>Throttling</h3>
+            <button class="tbutton">Throttle!!</button>
+            <h4>Scroll down</h4>
+            <div class="throttle">
+                <div class="items">
+                    <div class="item1 item">One</div>
+                    <div class="item2 item">Two</div>
+                    <div class="item3 item">Three</div>
+                    <div class="item4 item">Four</div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <h3>requestAnimationFrame()</h3>
+        <div class="animate">
+            <button class="start">start</button>
+            <button class="stop">stop</button><br /><br />
+            <span class="obj"></span>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.11/lodash.min.js"></script>
+    <script src="app.js"></script>
+
+</body>
+
+</html>
