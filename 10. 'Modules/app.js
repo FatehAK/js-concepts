@@ -1,6 +1,6 @@
 /* eslint-disable no-duplicate-imports */
 //deferred execution
-"use strict";
+'use strict';
 
 //imports everything
 import * as myModule from './modules/appmod1.js';
@@ -21,10 +21,12 @@ console.log(redirectMod());
 
 //dynamic import
 const btn = document.querySelector('.btn');
-btn.addEventListener('click', function() {
-    import('./modules/appmod2.js').then((module) => {
-        console.log(module.dyna());
-    }).catch((err) => {
-        console.log(err);
+btn.addEventListener('click', function () {
+  import('./modules/appmod2.js')
+    .then(module => {
+      console.log(module.dyna());
+    })
+    .catch(err => {
+      console.log(err);
     });
 });

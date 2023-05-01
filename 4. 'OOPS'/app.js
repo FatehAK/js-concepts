@@ -2,13 +2,13 @@
 console.log('=======================Object=======================');
 //>>object getters and setters
 const eObj = {
-    values: ['a', 'b', 'c'],
-    get gVal() {
-        return this.values[0];
-    },
-    set sVal(val) {
-        this.values[3] = val;
-    }
+  values: ['a', 'b', 'c'],
+  get gVal() {
+    return this.values[0];
+  },
+  set sVal(val) {
+    this.values[3] = val;
+  },
 };
 
 console.log(eObj.gVal);
@@ -18,29 +18,29 @@ console.log('eObj:', eObj);
 
 //>>object creation using Object() constructor
 const pObj = new Object({
-    name: 'Chris',
-    age: 38
+  name: 'Chris',
+  age: 38,
 });
 
 const e1 = { a: 1, b: 2 };
 //create a object and adds the passed object properties as the object's prototype
 const e2 = Object.create(e1);
 Object.defineProperties(e2, {
-    //by default enumerable --> false (only in case of deifneProperties)
-    //means that key won't appear in for loops
-    foo: {
-        value: 5 //own non enumerable property
-    },
-    bar: {
-        value: 3,
-        enumerable: true //own enumerable propery
-    }
+  //by default enumerable --> false (only in case of deifneProperties)
+  //means that key won't appear in for loops
+  foo: {
+    value: 5, //own non enumerable property
+  },
+  bar: {
+    value: 3,
+    enumerable: true, //own enumerable propery
+  },
 });
 e2.c = 5;
 console.log(e2);
 const iterObj = Object.keys(e2);
 for (const key of iterObj) {
-    console.log(key); // bar, c
+  console.log(key); // bar, c
 }
 console.log(e2.hasOwnProperty('foo')); //true
 console.log(e2.hasOwnProperty('a')); //false - prototype property
@@ -48,11 +48,11 @@ console.log(e2.hasOwnProperty('b')); //false - prototype property
 
 //>>Object creation using another object (added to prototype)
 const fObj = {
-    firstName: 'Joyce',
-    lastName: 'Jameson',
-    fullName() {
-        return this.firstName + ' ' + this.lastName;
-    }
+  firstName: 'Joyce',
+  lastName: 'Jameson',
+  fullName() {
+    return this.firstName + ' ' + this.lastName;
+  },
 };
 
 const newObj = Object.create(fObj);
@@ -63,14 +63,14 @@ console.log(newObj);
 //>>Object assignment
 //source object overrides contents of the target
 const source = {
-    b: 4,
-    c: 5
+  b: 4,
+  c: 5,
 };
 
 //here target is mutated
 const target = {
-    a: 1,
-    b: 2
+  a: 1,
+  b: 2,
 };
 
 const returnedTarget = Object.assign(target, source);
@@ -81,26 +81,26 @@ console.log(returnedTarget);
 
 //>>modify or add property/properties
 const gObj = {
-    firstName: 'Jon',
-    lastName: 'Jones'
+  firstName: 'Jon',
+  lastName: 'Jones',
 };
 
 console.log(gObj);
 Object.defineProperty(gObj, 'middleName', {
-    value: 'Jolly',
-    enumerable: true
+  value: 'Jolly',
+  enumerable: true,
 });
 console.log(gObj);
 Object.defineProperties(gObj, {
-    finalName: {
-        value: 'Jameson',
-        enumerable: true
+  finalName: {
+    value: 'Jameson',
+    enumerable: true,
+  },
+  getName: {
+    value: function () {
+      return this.firstName + ' ' + this.middleName + ' ' + this.lastName + ' ' + this.finalName;
     },
-    getName: {
-        value: function() {
-            return this.firstName + ' ' + this.middleName + ' ' + this.lastName + ' ' + this.finalName;
-        }
-    }
+  },
 });
 console.log(gObj);
 console.log(gObj.getName());
@@ -122,12 +122,12 @@ console.log('=======================OOPS=======================');
 
 //constructor function
 function Person(name) {
-    this.name = name;
-    //copy of this method is given to each object created using new
-    this.greeting = () => {
-        console.log('Hi ' + this.name);
-    };
-    console.log("I'm from constructor");
+  this.name = name;
+  //copy of this method is given to each object created using new
+  this.greeting = () => {
+    console.log('Hi ' + this.name);
+  };
+  console.log("I'm from constructor");
 }
 
 Person.prototype.proProp = "I'm from prototype object";
@@ -186,8 +186,8 @@ console.log(Object.getPrototypeOf(myArray));
 //>>The prototype chain
 // Let's create an object o from function f with its own properties a and b:
 function F() {
-    this.a = 1;
-    this.b = 2;
+  this.a = 1;
+  this.b = 2;
 }
 let o = new F(); // {a: 1, b: 2}
 
@@ -235,17 +235,17 @@ console.log('=====================Function Level Inheritance====================
 
 //>>>Non Parameterized Constructor
 function MyConstructor() {
-    this.fname = 'Jack';
-    this.lname = 'Jonas';
+  this.fname = 'Jack';
+  this.lname = 'Jonas';
 }
 
-MyConstructor.prototype.getName = function() {
-    return 'Name is: ' + this.fname + ' ' + this.lname;
+MyConstructor.prototype.getName = function () {
+  return 'Name is: ' + this.fname + ' ' + this.lname;
 };
 
 function MyChild(age) {
-    MyConstructor.call(this);
-    this.age = age;
+  MyConstructor.call(this);
+  this.age = age;
 }
 
 //Set Child's prototype to be Parent's prototype
@@ -253,8 +253,8 @@ MyChild.prototype = Object.create(MyConstructor.prototype);
 //reset Child's contructor so that it points to itself
 MyChild.prototype.constructor = MyChild;
 
-MyChild.prototype.getAge = function() {
-    return 'Age is: ' + this.age;
+MyChild.prototype.getAge = function () {
+  return 'Age is: ' + this.age;
 };
 
 const nonParaObj = new MyChild(12);
@@ -265,25 +265,25 @@ console.log(nonParaObj.getAge());
 
 //>>>>Parameterized Constructor
 function Parent(fname, lname) {
-    this.fname = fname;
-    this.lname = lname;
-    //Works!! but an independent function copy will be created for each object created using new operator
-    //use only if working with limited number of objects since its not memory efficient
-    //else use the prototype property itself
-    // this.getFullName = function () {
-    //     return this.fname + '' + this.lname;
-    // };
+  this.fname = fname;
+  this.lname = lname;
+  //Works!! but an independent function copy will be created for each object created using new operator
+  //use only if working with limited number of objects since its not memory efficient
+  //else use the prototype property itself
+  // this.getFullName = function () {
+  //     return this.fname + '' + this.lname;
+  // };
 }
 
 //shared among all object instances no independent copy for each object
-Parent.prototype.getFullName = function() {
-    console.log(this);
-    return this.fname + ' ' + this.lname;
+Parent.prototype.getFullName = function () {
+  console.log(this);
+  return this.fname + ' ' + this.lname;
 };
 
 function Child(fname, lname, age) {
-    Parent.call(this, fname, lname);
-    this.age = age;
+  Parent.call(this, fname, lname);
+  this.age = age;
 }
 
 //let the Child prototype refer to the new object created that has methods defined in Parent.prototype
@@ -292,9 +292,9 @@ Child.prototype = Object.create(Parent.prototype);
 //Now the Child constructor is set to Parent Constructor so we reset it
 Child.prototype.constructor = Child;
 
-Child.prototype.getAge = function() {
-    console.log(this);
-    return this.fname + ' ' + this.lname + ' ' + this.age;
+Child.prototype.getAge = function () {
+  console.log(this);
+  return this.fname + ' ' + this.lname + ' ' + this.age;
 };
 
 const childObj = new Child('Jack', 'Samson', 34);
@@ -318,22 +318,22 @@ console.log(Parent.prototype.isPrototypeOf(childObj));
  * 3. If you're creating a small number of Dogs and find that using local, "private" variables in your constructor improves your code, this may be the better approach. Use your         judgment and do some benchmarks if performance or memory consumption are major concerns.
  */
 function AngryDog(name) {
-    this.name = name;
+  this.name = name;
 
-    let barkCount = 0;
+  let barkCount = 0;
 
-    this.bark = function() {
-        barkCount++;
-        console.log(this.name + ' bark');
-    };
+  this.bark = function () {
+    barkCount++;
+    console.log(this.name + ' bark');
+  };
 
-    this.getBarkCount = function() {
-        console.log(this.name + ' has barked ' + barkCount + ' times');
-    };
+  this.getBarkCount = function () {
+    console.log(this.name + ' has barked ' + barkCount + ' times');
+  };
 }
 
-AngryDog.prototype.wagTail = function() {
-    console.log(this.name + ' wagging tail');
+AngryDog.prototype.wagTail = function () {
+  console.log(this.name + ' wagging tail');
 };
 
 const myDog1 = new AngryDog('Buster');
@@ -357,35 +357,35 @@ console.log(AngryDog.prototype);
 //   v      v
 //  Dog     Cat
 function Animal(name) {
-    this.name = name;
+  this.name = name;
 }
 
-Animal.prototype.eat = function() {
-    return this.name + ' eats.';
+Animal.prototype.eat = function () {
+  return this.name + ' eats.';
 };
 
 function Cat(name, age) {
-    Animal.call(this, name);
-    this.age = age;
+  Animal.call(this, name);
+  this.age = age;
 }
 
 Cat.prototype = Object.create(Animal.prototype);
 Cat.prototype.constructor = Cat;
 
-Cat.prototype.meow = function() {
-    return this.name + ' meows... with age ' + this.age;
+Cat.prototype.meow = function () {
+  return this.name + ' meows... with age ' + this.age;
 };
 
 function Dog(name, age) {
-    Animal.call(this, name);
-    this.age = age;
+  Animal.call(this, name);
+  this.age = age;
 }
 
 Dog.prototype = Object.create(Animal.prototype);
 Dog.prototype.constructor = Dog;
 
-Dog.prototype.bark = function() {
-    return this.name + ' barks... with age ' + this.age ;
+Dog.prototype.bark = function () {
+  return this.name + ' barks... with age ' + this.age;
 };
 
 const catObj = new Cat('Shiny', 3);
@@ -411,35 +411,35 @@ console.log(catObj instanceof Animal); //true
 // PuppyDog
 
 function AnimalBase(name) {
-    this.name = name;
+  this.name = name;
 }
 
-AnimalBase.prototype.eat = function() {
-    return this.name + ' eats.';
+AnimalBase.prototype.eat = function () {
+  return this.name + ' eats.';
 };
 
 function BigDog(name, age) {
-    AnimalBase.call(this, name);
-    this.age = age;
+  AnimalBase.call(this, name);
+  this.age = age;
 }
 
 BigDog.prototype = Object.create(AnimalBase.prototype);
 BigDog.prototype.constructor = BigDog;
 
-BigDog.prototype.bark = function() {
-    return this.name + ' barks... with age ' + this.age;
+BigDog.prototype.bark = function () {
+  return this.name + ' barks... with age ' + this.age;
 };
 
 function PuppyDog(name, age) {
-    AnimalBase.call(this, name);
-    this.age = age;
+  AnimalBase.call(this, name);
+  this.age = age;
 }
 
 PuppyDog.prototype = Object.create(BigDog.prototype);
 PuppyDog.prototype.constructor = PuppyDog;
 
-PuppyDog.prototype.cry = function() {
-    return this.name + ' cries... with age ' + this.age;
+PuppyDog.prototype.cry = function () {
+  return this.name + ' cries... with age ' + this.age;
 };
 
 const bigDogObj = new BigDog('Grumpy', 10);
@@ -468,11 +468,11 @@ console.log('=======================Object Level Inheritance====================
 
 //>>single chain
 let animal = {
-    eats: true
+  eats: true,
 };
 
 let rabbit = {
-    jumps: true
+  jumps: true,
 };
 
 //Depreciated way
@@ -492,28 +492,28 @@ console.log(rabbit);
 
 //>>multilevel chain
 let myanimal = {
-    eats: true,
-    walk() {
-        console.log('Animal walk');
-    },
+  eats: true,
+  walk() {
+    console.log('Animal walk');
+  },
 
-    get eatVal() {
-        return this.eats;
-    },
+  get eatVal() {
+    return this.eats;
+  },
 
-    set eatVal(val) {
-        this.eats = val;
-    }
+  set eatVal(val) {
+    this.eats = val;
+  },
 };
 
 let myrabbit = {
-    jumps: true,
-    __proto__: myanimal
+  jumps: true,
+  __proto__: myanimal,
 };
 
 let longEar = {
-    earLength: 10,
-    __proto__: myrabbit
+  earLength: 10,
+  __proto__: myrabbit,
 };
 
 // walk is taken from the prototype chain
@@ -524,8 +524,8 @@ console.log(longEar.earLength); // (from own)
 //method overriding
 //no traversal up the chain for writing data props
 //new method added to longEar object
-longEar.walk = function() {
-    console.log('Rabbit long ear walk');
+longEar.walk = function () {
+  console.log('Rabbit long ear walk');
 };
 longEar.walk();
 
@@ -543,10 +543,10 @@ console.log(animal); //eats : true
 //the code within classes is always executed in strict mode
 //standard class - not hoisted
 class Box {
-    constructor(height, width) {
-        this.height = height;
-        this.width = width;
-    }
+  constructor(height, width) {
+    this.height = height;
+    this.width = width;
+  }
 }
 // | Same as
 // v
@@ -557,42 +557,42 @@ class Box {
 
 //class expressions - not hoisted
 const Triangle = class {
-    constructor(angle) {
-        this.angle = angle;
-    }
+  constructor(angle) {
+    this.angle = angle;
+  }
 };
 
 class Rectangle {
-    constructor(height, width) {
-        this.height = height;
-        this.width = width;
-        //'this' methods
-        //can override the prototype methods
-        // this.calcArea = function() {
-        //     return this.height * this.height + ' yo';
-        // };
-    }
-    //below are all prototype methods
-    //getter
-    get area() {
-        return this.calcArea();
-    }
-    //method
-    calcArea() {
-        return this.height * this.width;
-    }
-    //static method - utility functions
-    static getVal1(obj) {
-        //can call other static methods through 'this'
-        this.getVal2(obj);
-        obj.height = 20;
-        return "I'm Static Method " + obj.height + ' ' + obj.calcArea() + ' ' + obj.area;
-    }
+  constructor(height, width) {
+    this.height = height;
+    this.width = width;
+    //'this' methods
+    //can override the prototype methods
+    // this.calcArea = function() {
+    //     return this.height * this.height + ' yo';
+    // };
+  }
+  //below are all prototype methods
+  //getter
+  get area() {
+    return this.calcArea();
+  }
+  //method
+  calcArea() {
+    return this.height * this.width;
+  }
+  //static method - utility functions
+  static getVal1(obj) {
+    //can call other static methods through 'this'
+    this.getVal2(obj);
+    obj.height = 20;
+    return "I'm Static Method " + obj.height + ' ' + obj.calcArea() + ' ' + obj.area;
+  }
 
-    static getVal2(obj) {
-        obj.height = 30;
-        console.log("I'm also Static Method " + obj.height + ' ' + obj.calcArea() + ' ' + obj.area);
-    }
+  static getVal2(obj) {
+    obj.height = 30;
+    console.log("I'm also Static Method " + obj.height + ' ' + obj.calcArea() + ' ' + obj.area);
+  }
 }
 
 const square = new Rectangle(10, 10);
@@ -607,32 +607,32 @@ console.log(Rectangle.prototype);
 //      V
 //constructor
 function RectOld(height, width) {
-    this.height = height;
-    this.width = width;
+  this.height = height;
+  this.width = width;
 }
 
 //getter method
 Object.defineProperty(RectOld.prototype, 'area', {
-    get: function() {
-        return this.calcArea();
-    }
+  get: function () {
+    return this.calcArea();
+  },
 });
 
 //normal method
-RectOld.prototype.calcArea = function() {
-    return this.height * this.width;
+RectOld.prototype.calcArea = function () {
+  return this.height * this.width;
 };
 
 //static methods
-RectOld.getVal1 = function(obj) {
-    obj.height = 20;
-    this.getVal2(obj);
-    return "I'm Static Metho" + 'd ' + obj.height + ' ' + obj.calcArea() + ' ' + obj.area;
+RectOld.getVal1 = function (obj) {
+  obj.height = 20;
+  this.getVal2(obj);
+  return "I'm Static Metho" + 'd ' + obj.height + ' ' + obj.calcArea() + ' ' + obj.area;
 };
 
-RectOld.getVal2 = function(obj) {
-    obj.height = 30;
-    console.log("I'm also Static Method " + obj.height + ' ' + obj.calcArea() + ' ' + obj.area);
+RectOld.getVal2 = function (obj) {
+  obj.height = 30;
+  console.log("I'm also Static Method " + obj.height + ' ' + obj.calcArea() + ' ' + obj.area);
 };
 
 const sqr = new RectOld(10, 10);
@@ -643,25 +643,25 @@ console.log(RectOld.prototype);
 
 //>>ES6 inheritance
 class Shape {
-    constructor(height, width) {
-        this.height = height;
-        this.width = width;
-    }
+  constructor(height, width) {
+    this.height = height;
+    this.width = width;
+  }
 
-    getArea() {
-        return ' Area is ' + this.height * this.width;
-    }
+  getArea() {
+    return ' Area is ' + this.height * this.width;
+  }
 }
 
 class MyRectangle extends Shape {
-    constructor(height, width, shape) {
-        super(height, width);
-        this.shape = shape;
-    }
+  constructor(height, width, shape) {
+    super(height, width);
+    this.shape = shape;
+  }
 
-    getShape() {
-        return 'The shape is ' + this.shape + super.getArea();
-    }
+  getShape() {
+    return 'The shape is ' + this.shape + super.getArea();
+  }
 }
 
 const rectObj = new MyRectangle(100, 100, 'Rectangle');

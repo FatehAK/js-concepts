@@ -56,44 +56,51 @@ console.log(arr1.sort());
 
 //with compare function - string array sorting
 console.log(
-    arr1.sort(function compare(a, b) {
-        if (a < b) {
-            //push 'b' to back
-            return -1;
-        }
-        if (a > b) {
-            //bring 'b' to front
-            return 1;
-        }
-        //a must be equal to b
-        return 0;
-    })
+  arr1.sort(function compare(a, b) {
+    if (a < b) {
+      //push 'b' to back
+      return -1;
+    }
+    if (a > b) {
+      //bring 'b' to front
+      return 1;
+    }
+    //a must be equal to b
+    return 0;
+  })
 );
 
 //with compare function - number array sorting
 const numArray = [10, 7, 22, 1, 2];
 console.log(
-    numArray.sort(function(a, b) {
-        return a - b;
-    })
+  numArray.sort(function (a, b) {
+    return a - b;
+  })
 );
 
 //array of objects sorting
-const items = [{ name: 'Edward' }, { name: 'Sharpe' }, { name: 'And' }, { name: 'The' }, { name: 'Magnetic' }, { name: 'Zeros' }];
+const items = [
+  { name: 'Edward' },
+  { name: 'Sharpe' },
+  { name: 'And' },
+  { name: 'The' },
+  { name: 'Magnetic' },
+  { name: 'Zeros' },
+];
 // sort by name
 console.log(
-    items.sort(function(a, b) {
-        const nameA = a.name.toUpperCase(); //ignore upper and lowercase
-        const nameB = b.name.toUpperCase(); //ignore upper and lowercase
-        if (nameA < nameB) {
-            return -1;
-        }
-        if (nameA > nameB) {
-            return 1;
-        }
-        //names must be equal
-        return 0;
-    })
+  items.sort(function (a, b) {
+    const nameA = a.name.toUpperCase(); //ignore upper and lowercase
+    const nameB = b.name.toUpperCase(); //ignore upper and lowercase
+    if (nameA < nameB) {
+      return -1;
+    }
+    if (nameA > nameB) {
+      return 1;
+    }
+    //names must be equal
+    return 0;
+  })
 );
 
 //>>fill(value, start, end)
@@ -137,7 +144,7 @@ console.log(newArray.includes(8));
 //return boolean
 //checks if every element passes the condition
 function checkEvery(val) {
-    return val <= 10;
+  return val <= 10;
 }
 
 console.log(newArray.every(checkEvery));
@@ -148,7 +155,7 @@ console.log(newArray.every(checkEvery));
 newArray.push(20);
 
 function checkSome(val) {
-    return val <= 10;
+  return val <= 10;
 }
 //20 is > 10 but still 'true'
 console.log(newArray.some(checkSome));
@@ -170,7 +177,7 @@ console.log(arr1.lastIndexOf('Mango'));
 //returns the index of elem that passes a condition
 
 function myCondition(val) {
-    return val === 'Pineapple';
+  return val === 'Pineapple';
 }
 
 console.log(arr1.findIndex(myCondition));
@@ -196,24 +203,24 @@ console.log(noHoles);
 //calls a function on each element and returns a new array
 const funArray = [1, 5, 7, 3, 8, 20, 10];
 console.log(funArray);
-const mapArray = funArray.map(function(val, index, obj) {
-    return val * 2;
+const mapArray = funArray.map(function (val, index, obj) {
+  return val * 2;
 });
 console.log(mapArray);
 
 //>>forEach()
 //does same as map but does not return an array
 //instead returns undefined
-const returnForEach = funArray.forEach(function(val, index, obj) {
-    console.log(val * 2);
+const returnForEach = funArray.forEach(function (val, index, obj) {
+  console.log(val * 2);
 });
 console.log(returnForEach);
 
 //>>filter()
 //returns a new array that passes condition
-const filterArray = funArray.filter(function(val) {
-    //the callback--> if 'true' value added to array else discarded
-    return val < 10;
+const filterArray = funArray.filter(function (val) {
+  //the callback--> if 'true' value added to array else discarded
+  return val < 10;
 });
 console.log(funArray);
 console.log(filterArray);
@@ -231,8 +238,8 @@ console.log(filterArray);
 // (16, 8)  --> 16 + 8  = 24
 // (24, 20) --> 24 + 20 = 44
 // (44, 10) --> 44 + 10 = 54
-const sumOfArray = funArray.reduce(function(accu, val, index, obj) {
-    return accu + val;
+const sumOfArray = funArray.reduce(function (accu, val, index, obj) {
+  return accu + val;
 });
 console.log(funArray);
 console.log(sumOfArray);
@@ -252,12 +259,12 @@ const myRandomArray = ['a', 'b', 'a', 'b', 'c', 'e', 'e', 'c', 'd', 'd', 'd', 'd
 // ['a', 'b', 'c', 'e', 'd']
 // ['a', 'b', 'c', 'e', 'd']
 // ['a', 'b', 'c', 'e', 'd']
-const myOrderedArray = myRandomArray.reduce(function(accumulator, currentValue) {
-    //if not in array then push
-    if (accumulator.indexOf(currentValue) === -1) {
-        accumulator.push(currentValue);
-    }
-    return accumulator;
+const myOrderedArray = myRandomArray.reduce(function (accumulator, currentValue) {
+  //if not in array then push
+  if (accumulator.indexOf(currentValue) === -1) {
+    accumulator.push(currentValue);
+  }
+  return accumulator;
 }, []);
 
 console.log(myOrderedArray);
@@ -273,8 +280,8 @@ console.log(myOrderedArray);
 // (48, 5)  --> 48 + 5  = 53
 // (53, 1)  --> 53 + 1  = 54
 
-const sumOfArrayRight = funArray.reduce(function(accu, val, index, obj) {
-    return accu + val;
+const sumOfArrayRight = funArray.reduce(function (accu, val, index, obj) {
+  return accu + val;
 });
 console.log(funArray);
 console.log(sumOfArrayRight);
@@ -287,9 +294,11 @@ let myString1 = 'abc';
 console.log(Array.from(myString1));
 
 let myString2 = '123';
-console.log(Array.from(myString2, function(val) {
+console.log(
+  Array.from(myString2, function (val) {
     return val * 2;
-}));
+  })
+);
 
 //>>values()
 const iterArray = ['a', 'b', 'c', 'd'];
@@ -303,7 +312,7 @@ console.log(iterableObj1.next()); //a
 //once iteration over done = true else done = false
 console.log(iterableObj1);
 for (let val of iterableObj1) {
-    console.log(val); // b, c, d
+  console.log(val); // b, c, d
 }
 console.log(iterableObj1.next());
 
@@ -312,14 +321,14 @@ console.log(iterableObj1.next());
 const iterableObj2 = iterArray.keys();
 console.log(iterableObj2);
 for (const key of iterableObj2) {
-    console.log(key);
+  console.log(key);
 }
 
 //>>entries
 const iterableObj3 = iterArray.entries();
 console.log(iterableObj3);
 for (const entry of iterableObj3) {
-    console.log(entry);
+  console.log(entry);
 }
 //*
 
@@ -359,8 +368,8 @@ let count = -1;
 let position = str.indexOf('e');
 
 while (position !== -1) {
-    position = str.indexOf('e', position + 1);
-    count++;
+  position = str.indexOf('e', position + 1);
+  count++;
 }
 console.log("Count of 'e': " + count);
 
@@ -487,7 +496,7 @@ console.log(iArray1);
 
 //>>Mutability of Objects
 let mObj1 = {
-    fname: 'Jack'
+  fname: 'Jack',
 };
 
 let mObj2 = mObj1;
@@ -501,12 +510,12 @@ console.log(mObj2); //Mickey
 //>>>>Shallow Clone
 //in shallow clone nested objects are copied by reference
 const o1 = {
-    a: 1,
-    b: 2,
-    c: function() {
-        return 'Obj Function';
-    },
-    d: { val: 'foo' }
+  a: 1,
+  b: 2,
+  c: function () {
+    return 'Obj Function';
+  },
+  d: { val: 'foo' },
 };
 const o2 = { ...o1 };
 o2.a = 5;
@@ -519,12 +528,12 @@ console.log(o2);
 console.log('\n');
 //or//
 const b1 = {
-    a: 1,
-    b: 2,
-    c: function() {
-        return 'Obj Function';
-    },
-    d: { val: 'foo' }
+  a: 1,
+  b: 2,
+  c: function () {
+    return 'Obj Function';
+  },
+  d: { val: 'foo' },
 };
 const b2 = Object.assign({}, b1);
 
@@ -541,12 +550,12 @@ console.log('\n');
 //in deep clone all values are copied includind nested ones
 //JSON method not suitable if object has 'functions'
 const n1 = {
-    a: 1,
-    b: 2,
-    c: function() {
-        return 'Obj Function';
-    },
-    d: { val: 'foo' }
+  a: 1,
+  b: 2,
+  c: function () {
+    return 'Obj Function';
+  },
+  d: { val: 'foo' },
 };
 const n2 = JSON.parse(JSON.stringify(n1));
 
@@ -562,22 +571,22 @@ console.log('\n');
 //or//
 //use iteration (preferred)
 function copy(src) {
-    let target, val, key;
-    target = Array.isArray(src) ? [] : {};
-    for (key in src) {
-        val = src[key];
-        target[key] = typeof val === 'object' ? copy(val) : val;
-    }
-    return target;
+  let target, val, key;
+  target = Array.isArray(src) ? [] : {};
+  for (key in src) {
+    val = src[key];
+    target[key] = typeof val === 'object' ? copy(val) : val;
+  }
+  return target;
 }
 
 const d1 = {
-    a: 1,
-    b: 2,
-    c: function() {
-        return 'Obj Function';
-    },
-    d: { val: 'foo' }
+  a: 1,
+  b: 2,
+  c: function () {
+    return 'Obj Function';
+  },
+  d: { val: 'foo' },
 };
 
 const d2 = copy(d1);
@@ -605,15 +614,15 @@ const myMap = new Map();
 let mapVar = 5;
 let mapString = "I'm in Map";
 let mapObj = {};
-let mapFun = function() { };
+let mapFun = function () {};
 
 //>>set(key, value)
 //and returns the map
 myMap.set(mapVar, 5);
 myMap.set(mapString, "I'm in Map");
 myMap.set(mapObj, { a: 6, b: 7 });
-myMap.set(mapFun, function() {
-    return 5;
+myMap.set(mapFun, function () {
+  return 5;
 });
 
 //>>get(key)
@@ -640,8 +649,8 @@ newMap.set('four', 4);
 console.log(newMap);
 
 //>>using forEach()
-newMap.forEach(function(val, key) {
-    console.log(key + ': ' + val);
+newMap.forEach(function (val, key) {
+  console.log(key + ': ' + val);
 });
 
 //newMap.clear(); //will clear the map()
@@ -650,27 +659,30 @@ newMap.forEach(function(val, key) {
 //returns iteratator obj with keys
 const mapIterator1 = newMap.keys();
 for (const key of mapIterator1) {
-    console.log(key);
+  console.log(key);
 }
 
 //>>values()
 //returns iteratator obj with values
 const mapIterator2 = newMap.values();
 for (const key of mapIterator2) {
-    console.log(key);
+  console.log(key);
 }
 
 //>>entries()
 //returns iteratator obj with [key, value]
 const mapIterator3 = newMap.entries();
 for (const [key, val] of mapIterator3) {
-    console.log(key + ': ' + val);
+  console.log(key + ': ' + val);
 }
 
 console.log(newMap.size);
 
 //>>Relation with Arrays
-const mpArray = [['key1', 'val1'], ['key2', 'val2']];
+const mpArray = [
+  ['key1', 'val1'],
+  ['key2', 'val2'],
+];
 const arrMap = new Map(mpArray);
 console.log(arrMap);
 console.log(Array.from(arrMap));
@@ -678,9 +690,16 @@ console.log(Array.from(arrMap));
 console.log(...new Map(mpArray));
 
 //>>Map Merge
-const first = new Map([[1, 'one'], [2, 'two'], [3, 'three']]);
+const first = new Map([
+  [1, 'one'],
+  [2, 'two'],
+  [3, 'three'],
+]);
 
-const second = new Map([[1, 'uno'], [2, 'dos']]);
+const second = new Map([
+  [1, 'uno'],
+  [2, 'dos'],
+]);
 
 //Merge maps with an array. The last repeated key wins.
 const merged = new Map([...first, ...second, [1, 'eins']]);
@@ -702,7 +721,7 @@ const wm1 = new WeakMap();
 const wm2 = new WeakMap();
 
 const ob1 = {};
-const ob2 = function() { };
+const ob2 = function () {};
 const ob3 = window;
 
 wm1.set(ob1, 37);
@@ -761,8 +780,8 @@ const setObj = { a: 1, b: 2 };
 mySet.add(20);
 mySet.add('Yolo');
 mySet.add(setObj);
-mySet.add(function() {
-    return 'Fun in Set';
+mySet.add(function () {
+  return 'Fun in Set';
 });
 console.log(mySet);
 
@@ -782,8 +801,8 @@ console.log(mySet);
 //duplicates removed
 const newSet = new Set([1, 2, 2, 3, 4]);
 console.log(newSet);
-newSet.forEach(function(val1, val2) {
-    console.log(val1 + ': ' + val2);
+newSet.forEach(function (val1, val2) {
+  console.log(val1 + ': ' + val2);
 });
 console.log(newSet[1]);
 //>>keys()
@@ -792,7 +811,7 @@ const setIterator1 = newSet.keys();
 console.log(setIterator1.next().value);
 console.log(setIterator1);
 for (const key of setIterator1) {
-    console.log(key);
+  console.log(key);
 }
 console.log(setIterator1.next().value);
 
@@ -800,14 +819,14 @@ console.log(setIterator1.next().value);
 //returns iteratator obj with values
 const setIterator2 = newSet.values();
 for (const key of setIterator2) {
-    console.log(key);
+  console.log(key);
 }
 
 //>>entries()
 //returns iteratator obj with [key, value]
 const setIterator3 = newSet.entries();
 for (const [key, val] of setIterator3) {
-    console.log(key + ': ' + val);
+  console.log(key + ': ' + val);
 }
 
 //>>Relation with arrays
@@ -870,14 +889,14 @@ console.log(jackSet2); //none it's gc'd
 //restrict objects to the class type
 const foos = new WeakSet();
 class Foo {
-    constructor() {
-        foos.add(this);
+  constructor() {
+    foos.add(this);
+  }
+  method() {
+    if (!foos.has(this)) {
+      throw new TypeError('Foo.prototype.method called on incompatible object!');
     }
-    method() {
-        if (!foos.has(this)) {
-            throw new TypeError('Foo.prototype.method called on incompatible object!');
-        }
-    }
+  }
 }
 //*
 
@@ -888,7 +907,7 @@ console.log('=======================Spread=======================');
 //used to expand the iterable object to pass as arguments in function
 //4 is discarded since no parameter present
 function summer(x, y, z) {
-    console.log(x + y + z); //6
+  console.log(x + y + z); //6
 }
 
 const spArr = [1, 2, 3, 4];
@@ -931,16 +950,16 @@ console.log(mergedObj);
 console.log('=======================Rest=======================');
 //used with function definitions to represent indefinite number of arguments
 function myFun(a, b, ...manyMoreArgs) {
-    console.log('a', a);
-    console.log('b', b);
-    console.log('manyMoreArgs', manyMoreArgs);
+  console.log('a', a);
+  console.log('b', b);
+  console.log('manyMoreArgs', manyMoreArgs);
 }
 
 myFun('one', 'two', 'three', 'four', 'five', 'six');
 
 //rest and destructure
 function f(...[a, b, c]) {
-    return a + b + c;
+  return a + b + c;
 }
 
 f(1); //NaN (b and c are undefined)
@@ -977,7 +996,7 @@ console.log('k1: ' + k1 + ', k2: ' + k2);
 
 //returning array from function
 function ff() {
-    return [1, 2];
+  return [1, 2];
 }
 
 const [l1, l2] = ff();
@@ -986,7 +1005,7 @@ console.log(l2); //2
 
 //ignoring return values
 function fff() {
-    return [1, 2, 3];
+  return [1, 2, 3];
 }
 
 const [g1, , g2] = fff();
@@ -995,8 +1014,8 @@ console.log(g2); //3
 
 //within functions
 function funDes1([a, b]) {
-    console.log(a); //1
-    console.log(b); //2
+  console.log(a); //1
+  console.log(b); //2
 }
 
 const desArray = ['1', '2'];
@@ -1026,31 +1045,35 @@ console.log(myB); //Bar
 
 //within functions
 function funDes2({ a, b, c: { val } }) {
-    console.log(a); //1
-    console.log(b); //2
-    console.log(val); //zoo
+  console.log(a); //1
+  console.log(b); //2
+  console.log(val); //zoo
 }
 
 const desObj3 = {
-    a: 1,
-    b: 2,
-    c: {
-        val: 'zoo'
-    }
+  a: 1,
+  b: 2,
+  c: {
+    val: 'zoo',
+  },
 };
 
 funDes2(desObj3);
 
 //with nested objects
 const desObj4 = {
-    h1: 1,
-    h2: 2,
-    h3: {
-        value: 'foo'
-    }
+  h1: 1,
+  h2: 2,
+  h3: {
+    value: 'foo',
+  },
 };
 
-let { h1, h2, h3: { value } } = desObj4;
+let {
+  h1,
+  h2,
+  h3: { value },
+} = desObj4;
 
 console.log(h1);
 console.log(h2);
@@ -1058,24 +1081,27 @@ console.log(value);
 
 //in iteration
 const people = [
-    {
-        name: 'Mike Smith',
-        family: {
-            mother: 'Jane Smith',
-            father: 'Harry Smith'
-        }
+  {
+    name: 'Mike Smith',
+    family: {
+      mother: 'Jane Smith',
+      father: 'Harry Smith',
     },
-    {
-        name: 'Tom Jones',
-        family: {
-            mother: 'Nora Jones',
-            father: 'Richard Jones'
-        }
-    }
+  },
+  {
+    name: 'Tom Jones',
+    family: {
+      mother: 'Nora Jones',
+      father: 'Richard Jones',
+    },
+  },
 ];
 
-for (const { name: n, family: { father: f } } of people) {
-    console.log(n + ' ' + f);
+for (const {
+  name: n,
+  family: { father: f },
+} of people) {
+  console.log(n + ' ' + f);
 }
 
 //with spread
@@ -1086,7 +1112,11 @@ console.log(r2);
 console.log(all);
 
 //array object destructuring
-const props = [{ id: 1, name: 'Fizz' }, { id: 2, name: 'Buzz' }, { id: 3, name: 'FizzBuzz' }];
+const props = [
+  { id: 1, name: 'Fizz' },
+  { id: 2, name: 'Buzz' },
+  { id: 3, name: 'FizzBuzz' },
+];
 
 const [, , { name }] = props;
 

@@ -7,7 +7,7 @@ import { anotherFun } from './appmod2.js';
 export const myVal = 10;
 
 export function myFun() {
-    return 'From export Module';
+  return 'From export Module';
 }
 //or//
 //export{myVal, myFun};
@@ -17,7 +17,7 @@ console.log(anotherFun());
 //default export can only be one function or class within the entire module
 //default export cannot be var, let, const
 export default function defFun() {
-    return 'I\'m default export';
+  return "I'm default export";
 }
 
 //exporting function from another module

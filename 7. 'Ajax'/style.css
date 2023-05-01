@@ -1,90 +1,90 @@
 .container {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    flex-direction: column;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex-direction: column;
 }
 
 .tests {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .apis {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .images {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .images > img {
-    border-radius: 10px;
-    margin: 10px 10px;
+  border-radius: 10px;
+  margin: 10px 10px;
 }
 
 .articles {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    flex-direction: column;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex-direction: column;
 }
 
 .articles > a {
-    margin: 20px 20px;
+  margin: 20px 20px;
 }
 
 .articles > a:link {
-    color: black;
+  color: black;
 }
 
 .articles > a:visited {
-    color: black;
+  color: black;
 }
 
 .translate {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .translate > p {
-    margin: 30px 20px;
+  margin: 30px 20px;
 }
 
 h2 {
-    color: #d13b59;
-    margin: 20px 0;
+  color: #d13b59;
+  margin: 20px 0;
 }
 
 h4 {
-    text-align: center;
-    margin: 10px;
+  text-align: center;
+  margin: 10px;
 }
 
 h2,
 p {
-    text-align: center;
+  text-align: center;
 }
 
 button {
-    padding: 5px 10px;
-    margin: 10px 10px;
-    background: #d13b59;
-    color: white;
-    border: 1px solid black;
-    border-radius: 5px;
-    cursor: pointer;
+  padding: 5px 10px;
+  margin: 10px 10px;
+  background: #d13b59;
+  color: white;
+  border: 1px solid black;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 button:hover {
-    background: #9b4141;
+  background: #9b4141;
 }
 
 h1 {
-    color: #e94040;
+  color: #e94040;
 }

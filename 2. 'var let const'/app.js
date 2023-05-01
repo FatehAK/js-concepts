@@ -16,32 +16,32 @@ console.log(this.meNoGlobal2);
 console.log('=======================var=======================');
 
 function outerFun11() {
-    //!first scope
-    console.log(myTopVar); //undefined
-    var myTopVar = 'Yo';
-    console.log(myBottomVar); //undefined
+  //!first scope
+  console.log(myTopVar); //undefined
+  var myTopVar = 'Yo';
+  console.log(myBottomVar); //undefined
 
-    for (var i = 0; i < 1; i++) {
-        var abc = "I'm from for loop";
-        console.log('top: (function scope)' + myTopVar);
-        console.log('bottom: (function scope)' + myBottomVar); //undefined
-    }
-    console.log('i value: ' + i);
-    console.log('var accessed outside the loop: ' + abc);
+  for (var i = 0; i < 1; i++) {
+    var abc = "I'm from for loop";
+    console.log('top: (function scope)' + myTopVar);
+    console.log('bottom: (function scope)' + myBottomVar); //undefined
+  }
+  console.log('i value: ' + i);
+  console.log('var accessed outside the loop: ' + abc);
 
-    function innerFun1() {
-        //!second scope
-        var innerVar = 'returned from inner function';
-        console.log('Closure (inner fn) top: ' + myTopVar);
-        console.log('Closure i value: ' + i);
-        console.log('Closure var accessed outside the loop: ' + abc);
-        console.log('Closure (inner fn) bottom: ' + myBottomVar);
-        return innerVar;
-    }
+  function innerFun1() {
+    //!second scope
+    var innerVar = 'returned from inner function';
+    console.log('Closure (inner fn) top: ' + myTopVar);
+    console.log('Closure i value: ' + i);
+    console.log('Closure var accessed outside the loop: ' + abc);
+    console.log('Closure (inner fn) bottom: ' + myBottomVar);
+    return innerVar;
+  }
 
-    //console.log(innerVar); //Reference Error
-    var myBottomVar = 'Hello';
-    return innerFun1;
+  //console.log(innerVar); //Reference Error
+  var myBottomVar = 'Hello';
+  return innerFun1;
 }
 
 var funa = outerFun11();
@@ -53,39 +53,39 @@ console.log(funa());
 console.log('=======================let=======================');
 
 function outerFun22() {
-    //!first scope
-    //console.log(myTopVar); //Reference Error
-    let myTopVar = 'Yo';
-    //console.log(myBottomVar); //Reference Error
+  //!first scope
+  //console.log(myTopVar); //Reference Error
+  let myTopVar = 'Yo';
+  //console.log(myBottomVar); //Reference Error
 
-    for (let i = 0; i < 1; i++) {
-        //!second scope
-        let abc = "I'm from for loop";
-        console.log('top: (sub block scope) ' + myTopVar);
-        //console.log('closure (for loop) bottom: ' + myBottomVar); //Reference Error
-        if (true) {
-            //!third scope --> sub scope
-            console.log('(from inner for loop): ' + abc);
-            console.log('top: (sub block scope) ' + myTopVar);
-            console.log('i: (sub block scope) ' + i);
-            //console.log('closure (inner for loop) bottom: ' + myBottomVar); //Reference Error
-        }
+  for (let i = 0; i < 1; i++) {
+    //!second scope
+    let abc = "I'm from for loop";
+    console.log('top: (sub block scope) ' + myTopVar);
+    //console.log('closure (for loop) bottom: ' + myBottomVar); //Reference Error
+    if (true) {
+      //!third scope --> sub scope
+      console.log('(from inner for loop): ' + abc);
+      console.log('top: (sub block scope) ' + myTopVar);
+      console.log('i: (sub block scope) ' + i);
+      //console.log('closure (inner for loop) bottom: ' + myBottomVar); //Reference Error
     }
-    //console.log('i value: ' + i); //Reference Error
-    //console.log('let accessed outside the loop: ' + abc); //Reference Error
+  }
+  //console.log('i value: ' + i); //Reference Error
+  //console.log('let accessed outside the loop: ' + abc); //Reference Error
 
-    function innerFun1() {
-        //!fourth scope
-        let innerVar = 'returned from inner function';
-        console.log('Closure (inner fn) top: ' + myTopVar);
-        //console.log('Closure i value: ' + i); //Referenece Error
-        //console.log('Closure let accessed outside the loop: ' + abc); //Reference Error
-        console.log('Closure (inner fn) bottom: ' + myBottomVar);
-        return innerVar;
-    }
-    //console.log(innerVar); //Reference Error
-    let myBottomVar = 'Hello';
-    return innerFun1;
+  function innerFun1() {
+    //!fourth scope
+    let innerVar = 'returned from inner function';
+    console.log('Closure (inner fn) top: ' + myTopVar);
+    //console.log('Closure i value: ' + i); //Referenece Error
+    //console.log('Closure let accessed outside the loop: ' + abc); //Reference Error
+    console.log('Closure (inner fn) bottom: ' + myBottomVar);
+    return innerVar;
+  }
+  //console.log(innerVar); //Reference Error
+  let myBottomVar = 'Hello';
+  return innerFun1;
 }
 
 let funb = outerFun22();
@@ -100,9 +100,9 @@ const aConst = 'Hello';
 
 //Change in value possible (mutation)
 for (let i = 0; i < 2; i++) {
-    const myVal = i;
-    //myVal = i+1; //Type Error - Assignment
-    console.log(myVal);
+  const myVal = i;
+  //myVal = i+1; //Type Error - Assignment
+  console.log(myVal);
 }
 //*
 
@@ -118,32 +118,32 @@ console.log('=======================Hoisting=======================');
 
 //>>function hoisting
 function test() {
-    //foo(); // TypeError "foo is not a function"
-    bar(); // valid
-    //baz(); // TypeError "baz is not a function"
-    //spam(); // ReferenceError "spam is not defined"
+  //foo(); // TypeError "foo is not a function"
+  bar(); // valid
+  //baz(); // TypeError "baz is not a function"
+  //spam(); // ReferenceError "spam is not defined"
 
-    let foo = function() {}; // anonymous function expression ('foo' gets hoisted)
-    function bar() {} // function declaration ('bar' and the function body get hoisted)
-    let baz = function spam() {}; // named function expression (only 'baz' gets hoisted)
+  let foo = function () {}; // anonymous function expression ('foo' gets hoisted)
+  function bar() {} // function declaration ('bar' and the function body get hoisted)
+  let baz = function spam() {}; // named function expression (only 'baz' gets hoisted)
 
-    foo(); // valid
-    bar(); // valid
-    baz(); // valid
-    //spam(); // ReferenceError "spam is not defined"
+  foo(); // valid
+  bar(); // valid
+  baz(); // valid
+  //spam(); // ReferenceError "spam is not defined"
 }
 test();
 
 //>>var hoisting
 //assignments are not hoisted only names are hoisted
 function goo() {
-    console.log(x); //undefined
-    console.log(y); //undefined
-    if (false) {
-        var x = 1;
-    } else {
-        var y = 1;
-    }
+  console.log(x); //undefined
+  console.log(y); //undefined
+  if (false) {
+    var x = 1;
+  } else {
+    var y = 1;
+  }
 }
 goo();
 
@@ -152,23 +152,23 @@ goo();
 //         |
 //         V
 function actualGoo() {
-    var x, y;
-    if (false) {
-        x = 1;
-    } else {
-        y = 1;
-    }
+  var x, y;
+  if (false) {
+    x = 1;
+  } else {
+    y = 1;
+  }
 }
 
 //>>let hoisting
 function moo() {
-    //console.log(x); //Reference Error
-    //console.log(y); //Reference Error
-    if (false) {
-        let x = 5;
-    } else {
-        let y = 6;
-    }
+  //console.log(x); //Reference Error
+  //console.log(y); //Reference Error
+  if (false) {
+    let x = 5;
+  } else {
+    let y = 6;
+  }
 }
 moo();
 
@@ -177,17 +177,17 @@ moo();
 //         |
 //         V
 function actualMoo() {
-    let x, y;
-    if (false) {
-        x = 1;
-    } else {
-        y = 1;
-    }
+  let x, y;
+  if (false) {
+    x = 1;
+  } else {
+    y = 1;
+  }
 }
 
 //>>Hoisting example
 function someFun(val) {
-    console.log('val is ' + val);
+  console.log('val is ' + val);
 }
 
 someFun(val);
@@ -198,7 +198,7 @@ var val = 5;
 //         |
 //         V
 function someFun(vall) {
-    console.log('val is ' + vall);
+  console.log('val is ' + vall);
 }
 let vall;
 someFun(vall);

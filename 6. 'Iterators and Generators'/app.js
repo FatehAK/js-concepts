@@ -4,12 +4,12 @@ console.log('=======================Generator=======================');
 //Their context is saved across re-entrances
 
 function* myGen(i) {
-    //yield - pauses the function and returns the value to the caller
-    //yield is same as return except it pauses the function rather than exiting from it
-    yield i;
-    yield i + 1;
-    yield i + 2;
-    yield i + 3;
+  //yield - pauses the function and returns the value to the caller
+  //yield is same as return except it pauses the function rather than exiting from it
+  yield i;
+  yield i + 1;
+  yield i + 2;
+  yield i + 3;
 }
 
 //returns an iterator
@@ -24,17 +24,17 @@ console.log('\n');
 
 //>>yield*
 function* myGenerator(i) {
-    yield i;
-    yield i + 1;
-    yield* anotherGen(i); //yield* - tranfers control to another gen() function
-    yield i + 3;
+  yield i;
+  yield i + 1;
+  yield* anotherGen(i); //yield* - tranfers control to another gen() function
+  yield i + 3;
 }
 
 function* anotherGen(i) {
-    yield i;
-    yield i + 10;
-    yield* ['a', 'b']; //yield* can also yield from other iterables
-    yield i + 20; //once over return back to original gen() function
+  yield i;
+  yield i + 10;
+  yield* ['a', 'b']; //yield* can also yield from other iterables
+  yield i + 20; //once over return back to original gen() function
 }
 
 const iter2 = myGenerator(10);
@@ -52,12 +52,12 @@ console.log('\n');
 
 //>>with return;
 function* myGen1(i) {
-    console.log("I'm First");
-    yield i;
-    console.log('Im Second');
-    yield i + 10;
-    return 'foo'; //at this point done: true
-    yield i + 20;
+  console.log("I'm First");
+  yield i;
+  console.log('Im Second');
+  yield i + 10;
+  return 'foo'; //at this point done: true
+  yield i + 20;
 }
 
 const iter3 = myGen1(10);
@@ -70,11 +70,11 @@ console.log('\n');
 
 //>>using yield to pass value inside as well
 function* gen() {
-    let ask1 = yield '2 + 2?';
-    console.log(ask1); // 4
+  let ask1 = yield '2 + 2?';
+  console.log(ask1); // 4
 
-    let ask2 = yield '3 * 3?';
-    console.log(ask2); // 9
+  let ask2 = yield '3 * 3?';
+  console.log(ask2); // 9
 }
 
 let generator = gen();
@@ -88,12 +88,12 @@ console.log('\n');
 const customers = ['John', 'Mary', 'Christine', 'Edward'];
 
 const getCustomers = function* () {
-    yield 'The customers are about to be retrieved. Press next() again to proceed.';
-    //   for (let customer of customers) {
-    //     yield customer;
-    //   } //or//
-    yield* customers;
-    return 'No more users to be retrieved.'; //acts as final return once all values are 'yielded'
+  yield 'The customers are about to be retrieved. Press next() again to proceed.';
+  //   for (let customer of customers) {
+  //     yield customer;
+  //   } //or//
+  yield* customers;
+  return 'No more users to be retrieved.'; //acts as final return once all values are 'yielded'
 };
 
 const customersGenerator = getCustomers();
@@ -134,7 +134,7 @@ console.log(iter5.next());
 //   |
 //   V
 for (const s of itString) {
-    console.log(s);
+  console.log(s);
 }
 console.log('\n');
 
@@ -152,40 +152,40 @@ console.log(iter6.next());
 //   |
 //   V
 for (const a of itArray) {
-    console.log(a);
+  console.log(a);
 }
 console.log('\n');
 
 //>>using custom iterables
 const range = {
-    from: 1,
-    to: 5
+  from: 1,
+  to: 5,
 };
 
 //define our Symbol.iterator
 //returns an iterator object
-range[Symbol.iterator] = function() {
-    // 1. Onward, for..of works only with this iterator, asking it for next values
-    return {
-        current: this.from,
-        last: this.to,
+range[Symbol.iterator] = function () {
+  // 1. Onward, for..of works only with this iterator, asking it for next values
+  return {
+    current: this.from,
+    last: this.to,
 
-        // 2. next() is called on each iteration by the for..of loop
-        next() {
-            // 3. it should return the value as an object {done:.., value :...}
-            if (this.current <= this.last) {
-                return { value: this.current++, done: false };
-            } else {
-                return { value: undefined, done: true };
-            }
-        }
-    };
+    // 2. next() is called on each iteration by the for..of loop
+    next() {
+      // 3. it should return the value as an object {done:.., value :...}
+      if (this.current <= this.last) {
+        return { value: this.current++, done: false };
+      } else {
+        return { value: undefined, done: true };
+      }
+    },
+  };
 };
 
 //for...of method - implicit call
 //The Symbol.iterator method is called automatically by for...of
 for (const num of range) {
-    console.log(num); // 1, then 2, 3, 4, 5
+  console.log(num); // 1, then 2, 3, 4, 5
 }
 
 //direct method - explicit call
@@ -200,9 +200,9 @@ console.log(iter7.next());
 
 //>>or use generators
 function* generateSeq(start, end) {
-    for (let i = start; i <= end; i++) {
-        yield i;
-    }
+  for (let i = start; i <= end; i++) {
+    yield i;
+  }
 }
 
 const iter8 = generateSeq(1, 5);
@@ -221,19 +221,19 @@ console.log(...iter8); //wont work now since iteration is complete
 //     |
 //     V
 for (const a of iter8) {
-    console.log(a); //wont work now since iteration is complete
+  console.log(a); //wont work now since iteration is complete
 }
 
 //if you need the iterable
 const rangeGen = {
-    from: 1,
-    to: 5,
-    *[Symbol.iterator]() {
-        //shortcut for [Symbol.iterator] = function* ()
-        for (let i = this.from; i <= this.to; i++) {
-            yield i;
-        }
+  from: 1,
+  to: 5,
+  *[Symbol.iterator]() {
+    //shortcut for [Symbol.iterator] = function* ()
+    for (let i = this.from; i <= this.to; i++) {
+      yield i;
     }
+  },
 };
 
 const iter9 = rangeGen[Symbol.iterator]();
@@ -252,6 +252,6 @@ console.log(...iter9); //wont work now since iteration is complete
 //     |
 //     V
 for (const a of iter9) {
-    console.log(a); //wont work now since iteration is complete
+  console.log(a); //wont work now since iteration is complete
 }
 //*
