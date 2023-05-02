@@ -4,9 +4,9 @@
 
 //imports everything
 import * as myModule from './modules/appmod1.js';
-//or//
+//or// import specific
 //import { myVal, myFun } from './modules/appmod.js';
-//or//
+//or// import specific and alias them
 //import {myVal as v, myFun as fun} from './modules/appmod.js';
 
 //default imports can have any name
