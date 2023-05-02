@@ -2,11 +2,47 @@
 
 //*Event loop
 console.log('=======================event loop=======================');
-/**In JavaScript, almost all I/O is non-blocking. This includes HTTP requests, database operations and disk reads and writes.
+/**In Node.js, almost all I/O is non-blocking. This includes HTTP requests, database operations and disk reads and writes.
  * 1. The single thread of execution asks the runtime to perform an operation, providing a callback function and then moves on to do something else.
  * 2. When the operation has been completed, a message is enqueued along with the provided callback function.
  * 3. At some point in the future, the message is dequeued and the callback fired.
  * */
+
+// setTimeout(function a() {
+//   console.log('a');
+// }, 1000);
+
+// setTimeout(function b() {
+//   console.log('b');
+// }, 500);
+
+// setTimeout(function c() {
+//   console.log('c');
+// }, 0);
+
+// function d() {
+//   console.log('d');
+// }
+
+// d(); // d, c, b, a
+
+// setTimeout(function a() {
+//   console.log('a');
+// }, 1000);
+
+// setTimeout(function b() {
+//   console.log('b');
+// }, 1000);
+
+// setTimeout(function c() {
+//   console.log('c');
+// }, 1000);
+
+// function dd() {
+//   console.log('d');
+// }
+
+// dd(); // d, a, b, c
 
 function foo(a) {
   let b = 5;
@@ -23,16 +59,16 @@ console.log(foo(5));
 
 // const s = new Date().getSeconds();
 // setTimeout(function () {
-//     // prints out "2", meaning that the callback is not called immediately after 500 milliseconds.
-//     console.log("Ran after " + (new Date().getSeconds() - s) + " seconds");
+//   // prints out "2", meaning that the callback is not called immediately after 500 milliseconds.
+//   console.log('Ran after ' + (new Date().getSeconds() - s) + ' seconds');
 // }, 500);
 
 // //ui thread blocks for 2 seconds
 // while (true) {
-//     if (new Date().getSeconds() - s >= 2) {
-//         console.log("UI thread blocked for 2 seconds");
-//         break;
-//     }
+//   if (new Date().getSeconds() - s >= 2) {
+//     console.log('UI thread blocked for 2 seconds');
+//     break;
+//   }
 // }
 //*
 
@@ -52,7 +88,7 @@ function loadScript1(src) {
 
 loadScript1('https://cdn.jsdelivr.net/npm/lodash@4.17.11/lodash.min.js');
 
-//console.log(_.drop([1, 2, 3], 2)); //results in '_' not defined
+// console.log(_.drop([1, 2, 3], 2)); //results in '_' not defined
 
 //>>With asynchronous callbacks
 //with async we make sure that the code '_.drop' is exceuted once we are sure the script has been loaded
@@ -179,7 +215,7 @@ myloadPromise.then((script) => {
 
 //>>Woking of Promises
 /*
-The function passed to new Promise is called the executor. When the promise is created, this executor function runs automatically.
+The function passed to new Promise is called the executor. When the promise is created, this executor function runs immediately.
 It contains the producing code, that should eventually produce a result.
 
 The resulting promise object has internal properties:
@@ -564,7 +600,7 @@ function gitFetch1() {
       return user;
     })
     //this code will remove the load indication, it will run after the previous then
-    .finally(() => {
+    .then(() => {
       return new Promise(resolve => {
         //we add some delay so that we can see it else opacity changes immediately
         setTimeout(() => {
@@ -685,7 +721,7 @@ const allPromises1 = Promise.all([
 // ]);
 
 allPromises1.then(val => {
-  //the values are logged in order even the promise 1 occurs with a delay of 3 sec
+  //the values are logged in order even when the promise 1 occurs with a delay of 3 sec
   //in such a case .all() waits till all of the promises are settled
   console.log(val);
 });
@@ -724,6 +760,7 @@ const p2 = new Promise((resolve, reject) => {
   setTimeout(resolve, 2000, 'Everything OK in Promise 2');
 });
 const p3 = new Promise((resolve, reject) => {
+  // treat error as resolved
   resolve(new Error('Something went wrong in Promise 3!'));
 });
 
@@ -935,16 +972,16 @@ async function aFun1() {
   return 1;
 }
 aFun1().then(val => {
-  console.log(val);
+  console.log(val); // 1
 });
 
 //same as
 //   |
 //   V
-async function aFun1() {
+async function aFun11() {
   return Promise.resolve(1);
 }
-aFun1().then(val => {
+aFun11().then(val => {
   console.log(val);
 });
 
@@ -979,7 +1016,7 @@ async function aFun3() {
     });
   });
 
-  console.log(aVal1);
+  console.log(aVal1); // I'm Awaited
 }
 
 aFun3();
@@ -988,10 +1025,10 @@ async function aFun2() {
   return await 1;
 }
 
-//no use of 'await' if we return last in the 'async' function
+//'await' is pointless if we return last in the 'async' function
 const aVal1 = aFun2();
-console.log(aVal1);
-//use '.then()' to consume the value
+console.log(aVal1); // Promise {<pending>}
+//we have to anyway use '.then()' to consume the value
 aFun2().then(val => {
   console.log(val);
 });
@@ -1038,44 +1075,60 @@ aFun5().catch(err => {
 //'await' pauses the exection of other code(async or sync) till it settles the current 'awaited' code
 async function aFun6() {
   new Promise(resolve => {
-    console.log('Not in time'); //code in the Promise constructor is executed synchronously
+    console.log('Not in timeout'); // sync
     resolve();
   });
 
-  await new Promise(resolve => {
+  console.log('Moo'); // sync
+
+  // async (non-blocking) - microtask
+  new Promise(resolve => {
     setTimeout(() => {
-      //asynchronous because of setTimeout() and blocks the synchronous code below 'In async'
-      console.log('In Time 1');
+      console.log('In timeout 1');
       resolve();
     }, 0);
   });
 
-  //executed last because of being in the macrotask queue
-  setTimeout(() => console.log('In Time 2'), 0); //asynchronous code
+  console.log('Foo'); // sync
 
-  await console.log('Foo'); //this also awaited
+  // async (blocking) - microtask
+  await new Promise(resolve => {
+    setTimeout(() => {
+      console.log('In timeout 2');
+      resolve();
+    }, 0);
+  });
 
-  //this sync code delayed by await
-  console.log('In async'); //synchronous code
+  console.log('Bar'); // sync
 
-  return 'boo'; //resolved 'boo' returned
+  // async (non-block) - macrotask
+  setTimeout(() => console.log('In timeout 3'), 0);
+
+  await console.log('Sync - Blocking'); // sync (blocking)
+
+  console.log('Baz'); // sync
+
+  return 'Boo'; // resolved value
 }
 
 //get the returned promise
 const myPromise4 = aFun6();
 myPromise4.then(val => {
-  console.log(val); //asynchronous code
+  console.log(val); // async
 });
-//'await' semantics don't work outside so this get printed second
-console.log('In Main'); //synchronous code
-//Order of execution
-//Not in time
-//In Main
-//In Time 1
-//Foo
-//In async
-//boo
-//In Time 2
+console.log('In Main'); // synchronous code
+// Order of execution
+// Not in timeout
+// Moo
+// Foo
+// In Main
+// In timeout 1
+// In timeout 2
+// Bar
+// Sync - Blocking
+// Baz
+// Boo
+// In timeout 3
 
 //>>problem with 'await'
 //The await keyword blocks execution of all the code after it until the promise fulfills, exactly as it would with a synchronous operation.
@@ -1177,7 +1230,7 @@ async function gitFetch2() {
     user = await loadJson(`https://api.github.com/users/${userName}`);
     console.log(user);
   } catch (err) {
-    if (err instanceof MyHttpError1 && err.response.status === 404) {
+    if (err instanceof MyHttpError && err.response.status === 404) {
       alert('No such user. Please reenter the details...');
       console.log(err);
       gitFetch2();

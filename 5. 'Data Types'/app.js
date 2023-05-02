@@ -4,57 +4,60 @@ const arr1 = ['Apple', 'Mango', 'Grapes', 'Berry', 'Litchi'];
 
 //>>MUTABLE METHODS - modifies original array
 //>>push()
-//add one or more to last and return new length
+//add one or more elements to last and return new length
 //modifies array 'in place'
-console.log(arr1.push('Orange'));
-console.log(arr1);
+console.log(arr1.push('Orange')); // 6
+console.log(arr1); // ['Apple', 'Mango', 'Grapes', 'Berry', 'Litchi', 'Orange']
 
 const vegetables = ['parsnip', 'potato'];
 const moreVegs = ['celery', 'beetroot'];
-// Merge the second array into the first one
+// addd items from the second array into the first one
 vegetables.push(...moreVegs);
-console.log(vegetables);
+console.log(vegetables); // ['parsnip', 'potato', 'celery', 'beetroot']
 
 //>>pop()
 //remove last and return removed
-console.log(arr1.pop());
-console.log(arr1);
+console.log(arr1.pop()); // Orange
+console.log(arr1); // ['Apple', 'Mango', 'Grapes', 'Berry', 'Litchi']
 
 //>>shift()
 //remove first element and return removed
-console.log(arr1.shift());
-console.log(arr1);
+console.log(arr1.shift()); // Apple
+console.log(arr1); // ['Mango', 'Grapes', 'Berry', 'Litchi']
 
 //>>unshift()
 //adds one or more to start and return new length
-console.log(arr1.unshift('Pineapple', 'Guava'));
-console.log(arr1);
+console.log(arr1.unshift('Pineapple', 'Guava')); // 6
+console.log(arr1); // ['Pineapple', 'Guava', 'Mango', 'Grapes', 'Berry', 'Litchi']
 
 //>>reverse()
 //reverse elements of array
 const newArr1 = arr1.reverse();
-console.log(newArr1);
+console.log(newArr1); // ['Litchi', 'Berry', 'Grapes', 'Mango', 'Guava', 'Pineapple']
 //careful reverse the elements in place so original array also modified
-console.log(arr1);
+console.log(arr1); // ['Litchi', 'Berry', 'Grapes', 'Mango', 'Guava', 'Pineapple']
 
 //>>splice(index, delCount, item)
+// index -> index inclusive
 //returns the deleted element
 //insert element at 2nd position
-console.log(arr1.splice(1, 0, 'JackFruit'));
-console.log(arr1);
+console.log(arr1.splice(1, 0, 'JackFruit')); // []
+console.log(arr1); // ['Litchi', 'JackFruit', 'Berry', 'Grapes', 'Mango', 'Guava', 'Pineapple']
 //replace 1st element
-console.log(arr1.splice(0, 1, 'Cherry'));
-console.log(arr1);
+console.log(arr1.splice(0, 1, 'Cherry')); // ['Litchi']
+console.log(arr1); // ['Cherry', 'JackFruit', 'Berry', 'Grapes', 'Mango', 'Guava', 'Pineapple']
 //delete 2 elements from 2nd position
-console.log(arr1.splice(2, 2));
-console.log(arr1);
+console.log(arr1.splice(2, 2)); // ['Berry', 'Grapes']
+console.log(arr1); // ['Cherry', 'JackFruit', 'Mango', 'Guava', 'Pineapple']
 
 //>>sort(compareFun)
 //sorting is done in place
 //without compare function
-console.log(arr1.sort());
+// console.log(arr1.sort());
+// or - sorting with handling of accented chars
+console.log(arr1.sort((a, b) => a.localeCompare(b)));
 
-//with compare function - string array sorting
+// with compare function - string array sorting
 console.log(
   arr1.sort(function compare(a, b) {
     if (a < b) {
@@ -70,13 +73,12 @@ console.log(
   })
 );
 
-//with compare function - number array sorting
-const numArray = [10, 7, 22, 1, 2];
-console.log(
-  numArray.sort(function (a, b) {
-    return a - b;
-  })
-);
+// with compare function - number array sorting
+const numArray = [10, 100, 22, 1, 2];
+//! issue with normal sorting -> sorting is done based on ASCII chars
+console.log(numArray.sort()); // [1, 10, 100, 2, 22]
+// a - b (asc); b - a (dsc)
+console.log(numArray.sort((a, b) => a - b)); // [1, 2, 10, 22, 100]
 
 //array of objects sorting
 const items = [
@@ -88,6 +90,14 @@ const items = [
   { name: 'Zeros' },
 ];
 // sort by name
+/*
+{name: 'And'},
+{name: 'Edward'},
+{name: 'Magnetic'},
+{name: 'Sharpe'},
+{name: 'The'},
+{name: 'Zeros'}
+*/
 console.log(
   items.sort(function (a, b) {
     const nameA = a.name.toUpperCase(); //ignore upper and lowercase
@@ -104,41 +114,42 @@ console.log(
 );
 
 //>>fill(value, start, end)
-//fill with specified value from start to end-1
+// start - inclusive; end - exclusive
+// fill with specified value from start to end-1
 const fillArray = [1, 2, 3, 4, 5, 6, 7, 8];
-fillArray.fill(5, 3, 5);
-console.log(fillArray);
+fillArray.fill(5, 0, 3);
+console.log(fillArray); // [5, 5, 5, 4, 5, 6, 7, 8]
 
 //>>IMMUTABLE METHODS - return a new array
+const ar1 = ['Apple', 'Mango', 'Grapes', 'Berry', 'Litchi'];
 //>>slice(start, end)
+// start - inclusive; end - exclusive
 //return new array with sliced elements
-//from position 1 to position 2 (end item not counted)
-const sliced = arr1.slice(1, 3);
-console.log(sliced);
+console.log(ar1.slice(0, 3)); // ['Apple', 'Mango', 'Grapes']
+// remove last el
+console.log(ar1.slice(0, -1)); // ['Apple', 'Mango', 'Grapes', 'Berry']
+console.log(ar1.slice(-1, 3)); // [] (no such index positions) [-1 + arr.len = 4,3)
 //original array unmodified
-console.log(arr1);
+console.log(arr1); // ['Apple', 'Mango', 'Grapes', 'Berry', 'Litchi']
 
 //>>join('seperator')
 //returns a string
 //default seperator is 'comma'
-const str1 = arr1.join();
-console.log(str1);
-const str2 = arr1.join('--');
-console.log(str2);
+console.log(ar1.join()); // Apple,Mango,Grapes,Berry,Litchi
+console.log(ar1.join('--')); // Apple--Mango--Grapes--Berry--Litchi
 
-//>>concat()
+//>>concat(arr)
 //merge two arrays and return new array
 const a1 = [1, 2];
 const a2 = [3, , 5, 6, 7];
 const newArray = a1.concat(a2);
-console.log(a1);
-console.log(a2);
-console.log(newArray);
+console.log(newArray); // [1, 2, 3, empty, 5, 6, 7]
 
-//>>includes()
+//>>includes(elem, fromIndex)
 //whether array includes the value
-console.log(newArray.includes(1));
-console.log(newArray.includes(8));
+console.log(newArray.includes(1)); // true
+console.log(newArray.includes(8)); // false
+console.log(newArray.includes(1, 1)); // false
 
 //>>every()
 //return boolean
@@ -147,7 +158,7 @@ function checkEvery(val) {
   return val <= 10;
 }
 
-console.log(newArray.every(checkEvery));
+console.log(newArray.every(checkEvery)); // true
 
 //>>some()
 //return boolean
@@ -158,74 +169,70 @@ function checkSome(val) {
   return val <= 10;
 }
 //20 is > 10 but still 'true'
-console.log(newArray.some(checkSome));
+console.log(newArray.some(checkSome)); // true
 
 //>>indexOf('val', fromIndex)
 //returns the index of first occurence of passed value
 //-1 otherwise
-console.log(arr1);
-console.log(arr1.indexOf('Mango', 2));
-arr1.push('Mango');
-console.log(arr1);
+console.log(ar1.indexOf('Mango')); // 1
+console.log(ar1.indexOf('Mango', 2)); // -1
 
 //>>lastIndexOf('val', fromBackIndex)
 //returns the index of last occurence of passed value
 //array is searched backwards
-console.log(arr1.lastIndexOf('Mango'));
+ar1.push('Mango');
+console.log(ar1.lastIndexOf('Mango')); // 5
 
-//>>findIndex()
-//returns the index of elem that passes a condition
-
+//>>findIndex(cb)
+//returns the index of elem that passes a condition, else -1
 function myCondition(val) {
   return val === 'Pineapple';
 }
 
-console.log(arr1.findIndex(myCondition));
+console.log(ar1.findIndex(myCondition)); // -1
 
-//>>find()
-//return the first elem that passes the condition
-console.log(arr1.find(myCondition));
+//>>find(cb)
+//return the first elem that passes the condition, else undefined
+console.log(ar1.find(myCondition)); // undefined
 
-//>>flat()
+//>>flat(depth)
 //returns a new flattened array
-const deepArray = [1, 2, ['a', 'b'], 3];
-console.log(deepArray);
-const flatArray = deepArray.flat();
-console.log(flatArray);
+const deepArray = [1, 2, ['a', 'b', [['c', 'd']]], 3];
+console.log(deepArray.flat()); // [1, 2, 'a', 'b', [['c', 'd']], 3]
+console.log(deepArray.flat(5)); // [1, 2, 'a', 'b', 'c', 'd', 3]
 
-//can also fill holes in array
+// can also remove holes in array
 const holeArray = [1, 2, , , 5];
-console.log(holeArray);
-const noHoles = holeArray.flat();
-console.log(noHoles);
+console.log(holeArray); // [1, 2, empty × 2, 5]
+console.log(holeArray.flat()); // [1, 2, 5]
 
-//>>map()
+//>>map((val, idx, arr) => {})
 //calls a function on each element and returns a new array
 const funArray = [1, 5, 7, 3, 8, 20, 10];
 console.log(funArray);
-const mapArray = funArray.map(function (val, index, obj) {
+const mapArray = funArray.map(function (val, index, arr) {
   return val * 2;
 });
 console.log(mapArray);
 
-//>>forEach()
+//>>forEach((val, idx, arr) => {})
 //does same as map but does not return an array
 //instead returns undefined
-const returnForEach = funArray.forEach(function (val, index, obj) {
+const returnForEach = funArray.forEach(function (val, index, arr) {
   console.log(val * 2);
 });
 console.log(returnForEach);
 
-//>>filter()
+//>>filter((val, idx, arr) => {})
 //returns a new array that passes condition
-const filterArray = funArray.filter(function (val) {
+const filterArray = funArray.filter(function (val, index, arr) {
   //the callback--> if 'true' value added to array else discarded
   return val < 10;
 });
 console.log(funArray);
 console.log(filterArray);
 
-//>>reduce(accumulator, currentVal)
+//>>reduce((accumulator, currentVal, idx, arr) => {}, initialVal)
 //return a reduced array
 //takes a reducer function to provide single output value
 //where accumulator --> value returned by cb (0 initially but can be supplied)
@@ -238,27 +245,21 @@ console.log(filterArray);
 // (16, 8)  --> 16 + 8  = 24
 // (24, 20) --> 24 + 20 = 44
 // (44, 10) --> 44 + 10 = 54
-const sumOfArray = funArray.reduce(function (accu, val, index, obj) {
-  return accu + val;
-});
-console.log(funArray);
-console.log(sumOfArray);
+/*
+If initial val present
+  -> acc = initialVal
+  -> then starIndex of iteration = 0
+If initial val not present
+  -> acc = arr[0]
+  -> then startIndex of iteration = 1
+*/
+const sumOfArray = funArray.reduce(function (acc, cur, index, obj) {
+  return acc + cur;
+}, 0);
+console.log(sumOfArray); // 54
 
 //removing duplicates with reduce()
 const myRandomArray = ['a', 'b', 'a', 'b', 'c', 'e', 'e', 'c', 'd', 'd', 'd', 'd'];
-// []
-// ['a']
-// ['a', 'b']
-// ['a', 'b']
-// ['a', 'b']
-// ['a', 'b', 'c']
-// ['a', 'b', 'c', 'e']
-// ['a', 'b', 'c', 'e']
-// ['a', 'b', 'c', 'e']
-// ['a', 'b', 'c', 'e', 'd']
-// ['a', 'b', 'c', 'e', 'd']
-// ['a', 'b', 'c', 'e', 'd']
-// ['a', 'b', 'c', 'e', 'd']
 const myOrderedArray = myRandomArray.reduce(function (accumulator, currentValue) {
   //if not in array then push
   if (accumulator.indexOf(currentValue) === -1) {
@@ -266,10 +267,9 @@ const myOrderedArray = myRandomArray.reduce(function (accumulator, currentValue)
   }
   return accumulator;
 }, []);
+console.log(myOrderedArray); // ['a', 'b', 'c', 'e', 'd']
 
-console.log(myOrderedArray);
-
-//>>reduceRight(accumulator, currentVal)
+//>>reduceRight((accumulator, currentVal, idx, arr) => {}, initialVal)
 //reduction starts right to left(from last) rather than left to right(from first)
 // funArray = [1, 5, 7, 3, 8, 20, 10]
 // (0, 10)  --> 0 + 10  = 10
@@ -283,22 +283,25 @@ console.log(myOrderedArray);
 const sumOfArrayRight = funArray.reduce(function (accu, val, index, obj) {
   return accu + val;
 });
-console.log(funArray);
-console.log(sumOfArrayRight);
+console.log(sumOfArrayRight); // 54
 
 //>>Array.from(array-like, mapFn)
 //generates Array from Array-like objects
 //i.e objects with 'length' property
 // (or) Iterable objects (Map, Set)
-let myString1 = 'abc';
-console.log(Array.from(myString1));
+console.log(Array.from('abc')); // ['a', 'b', 'c']
+console.log(Array.from('123', val => val * 2)); // [2, 4, 6]
+console.log(Array.from({ length: 5 }, (val, idx) => idx * 2)); // [0, 2, 4, 6, 8]
 
-let myString2 = '123';
-console.log(
-  Array.from(myString2, function (val) {
-    return val * 2;
-  })
-);
+//>>at(idx) -> a getter method for array element at index
+// allows to access element at + or - index
+// you can't do this in JS -> arr[-1] instead you usually do arr[arr.length - 1], but now with at ->
+console.log(['red', 'green', 'blue'].at(-1)); // blue
+console.log(['red', 'green', 'blue'].at(0)); // red
+
+//>>flatMap((val) => {})
+// returns a new array formed by applying a given callback function to each element of the array, and then flattening the result by one level. It is identical to a map() followed by a flat() of depth 1
+console.log([1, 2, [1]].flatMap(num => (num === 2 ? [2, 2] : num))); // [1, 2, 2, 1]
 
 //>>values()
 const iterArray = ['a', 'b', 'c', 'd'];
@@ -306,29 +309,27 @@ const iterArray = ['a', 'b', 'c', 'd'];
 //returns an Iterable object with values
 const iterableObj1 = iterArray.values();
 //can explicatly iterate
-console.log(iterableObj1.next()); //a
+console.log(iterableObj1.next()); //  { value: 'a', done: false }
 //note: the iterable object is able to maintain the state
 //i.e if object is iterated once in one place then when iterating from some other place it will start from left out values
 //once iteration over done = true else done = false
-console.log(iterableObj1);
 for (let val of iterableObj1) {
   console.log(val); // b, c, d
 }
-console.log(iterableObj1.next());
+console.log(iterableObj1.next()); // { value: undefined, done: true }
 
 //>>keys()
 //returns an Iteratable object with keys
 const iterableObj2 = iterArray.keys();
-console.log(iterableObj2);
 for (const key of iterableObj2) {
-  console.log(key);
+  console.log(key); // 1, 2, 3, 4
 }
 
-//>>entries
+//>>entries()
 const iterableObj3 = iterArray.entries();
 console.log(iterableObj3);
 for (const entry of iterableObj3) {
-  console.log(entry);
+  console.log(entry); // [0, 'a'], [1, 'b'], [2, 'c'], [3, 'd']
 }
 //*
 
@@ -337,94 +338,223 @@ console.log('=======================String=======================');
 
 const sentence = 'A sentence';
 
-//>>charAt()
+//>>charAt(idx)
 //returns the actual character at the index
-console.log(sentence.charAt(0));
+console.log(sentence.charAt(0)); // A
 //or// treat it like array
-console.log(sentence[0]);
+console.log(sentence[0]); // A
+// or
+console.log(sentence.at(0)); // A
+console.log(sentence.at(-4)); // e
 //returns the UNICODE representation
-console.log(sentence.charCodeAt(0));
+console.log(sentence.charCodeAt(0)); // 65
 
-//>>concat()
+//>>String.fromCharCode(code1, code2...codeN)
+// construct string from UTF-16 code units (ascii)
+console.log(String.fromCharCode(65, 66, 67)); // ABC
+
+//>>String.raw``
+//  used to get the raw string form of template literals — that is, substitutions (e.g. ${foo}) are processed, but escape sequences (e.g. \n) are not.
+console.log(String.raw`C:\Development\profile\aboutme.html`);
+
+//>>concat(str1, str2...strN)
 //returns a concatenated string
 const anotherSentence = ' is given';
-console.log(sentence.concat(anotherSentence));
+console.log(sentence.concat(anotherSentence)); // A sentence is given
 //for performance use + operator instead
-console.log(sentence + anotherSentence);
+console.log(sentence + anotherSentence); // A sentence is given
 
 const myar1 = ['hello', ' there'];
-const sr = 'Hi '.concat(...myar1);
-console.log(sr);
+console.log('Hi '.concat(...myar1)); // Hi hello there
 
-//>>indexOf('', fromIndex)
+//>>indexOf(char, fromIndex)
 //returns index of passed character - first occurence
 const myStr = 'Web is Awesome Awesome';
-console.log(myStr);
-console.log(myStr.indexOf('Awesome'));
+console.log(myStr.indexOf('Awesome')); // 7
 
 //count number of occurences of letter in string
 const str = 'To be, or not to be, that is the question.';
 let count = -1;
-let position = str.indexOf('e');
+let pos = str.indexOf('e');
 
-while (position !== -1) {
-  position = str.indexOf('e', position + 1);
-  count++;
+/*
+pos = 4
+0
+pos = 10
+1
+post = 15
+2
+pos = -1
+3 // result
+*/
+while (pos !== -1) {
+  pos = str.indexOf('e', pos + 1);
+  count = count + 1;
 }
-console.log("Count of 'e': " + count);
+
+console.log("Count of 'e': " + count); // 3
 
 //>>lastIndexOf('', fromIndex)
 //search in backward direction
 //returns index of passed character - last occurence
-console.log(myStr.lastIndexOf('Awesome'));
+console.log(myStr.lastIndexOf('Awesome')); // 15
 
-//>>includes('')
+//>>includes('', fromIndex)
 //returns true if substring is found in the string
-console.log(myStr.includes('Awe'));
+console.log(myStr.includes('Awe')); // true
+
+//>>substring(start, end)
+// start -> inclusive
+// end -> exclusive
+// negative indices clamped to 0
+// returns a substring of the string
+console.log(myStr.substring(0, 3)); // Web
+console.log(myStr.substring(-1)); // Web is Awesome Awesome
+console.log(myStr.substring(-4, -1)); // ''
+
+//>>slice(start, end)
+// start -> inclusive
+// end -> exclusive
+// returns a slice of the original string
+console.log(myStr.slice(0, 3)); // Web
+console.log(myStr.slice(-1)); // e
+console.log(myStr.slice(-4, -1)); // som
+
+/*
+The substring() method swaps its two arguments if indexStart is greater than indexEnd, meaning that a string is still returned. The slice() method returns an empty string if this is the case.
+
+const text = "Mozilla";
+console.log(text.substring(5, 2)); // "zil"
+console.log(text.slice(5, 2)); // ""
+
+If either or both of the arguments are negative or NaN, the substring() method treats them as if they were 0.
+
+console.log(text.substring(-5, 2)); // "Mo"
+console.log(text.substring(-5, -2)); // ""
+
+slice() also treats NaN arguments as 0, but when it is given negative values it counts backwards from the end of the string to find the indexes.
+
+console.log(text.slice(-5, 2)); // ""
+console.log(text.slice(-5, -2)); // "zil"
+*/
 
 //>>repeat(count)
 //repeats the string specified by the count
 //returns a new string
 console.log(myStr.repeat(2));
 
-//>>replace('pattern', 'new pattern')
+//>>replace('pattern' || regex, 'new pattern' || func)
 //replace the pattern in the string for a new pattern
 //can replace only one occurence
 //returns new string
-console.log(myStr.replace(' ', '-'));
+console.log(myStr.replace(' ', '-')); // Web-is-Awesome-Awesome
 //to replace all occurence use regex
 // /g means global replace /i means ignore case
-const re = / /gi;
-console.log(myStr.replace(re, '-'));
+console.log(myStr.replace(/awesome/gi, 'Amazing')); // Web is Amazing Amazing
+
+// using capture groups to swap words
+console.log('Maria Cruz'.replace(/(\w+)\s(\w+)/, '$2, $1')); // Cruz, Maria
+
+// using a fuction replacer
+console.log(
+  'abc12345#$*%'.replace(/([^\d]*)(\d*)([^\w]*)/, (match, p1, p2, p3, offset, string) => {
+    console.log('## the match,offset: ', match, offset); // abc12345#$*% 0
+    // p1 is non-digits, p2 digits, and p3 non-alphanumerics
+    return [p1, p2, p3].join(' - ');
+  })
+); // abc - 12345 - #$*%
+// all occurrences of capital letters in the string are converted to lower case, and a hyphen is inserted just before the match location.
+console.log(
+  'borderTop'.replace(/[A-Z]/g, (match, offset) => {
+    console.log('## the match,offset: ', match, offset); // T 6
+    return (offset > 0 ? '-' : '') + match.toLowerCase();
+  })
+); // border-top
+
+//>>replaceAll()
+// returns a new string with all matches of a pattern replaced by a replacement
+console.log('aabbcc'.replaceAll('b', '.')); // 'aa..cc'
+// if using regex then make sure to use the /g flag else exception is thrown
+console.log('aabbcc'.replaceAll(/b/g, '.')); // 'aa..cc'
 
 //>>search(regexp or '')
-//returns the index of the matched string
-const reg1 = /[A-Z]/g;
-console.log(myStr.search(reg1));
+//returns the first index of the matched string, else -1
+// 'g' flag has no effect on searching
+console.log(myStr.search('Awe')); // 7
+console.log(myStr.search(/Awe/)); // 7
 
-//>>match(regexp)
-//returns an array of matched strings
-const reg2 = /[A-Z]/g;
-console.log(myStr.match(reg2));
+//>>match(regexp || '')
+//returns first match and its position, else null
+console.log(myStr.match('A')); // ['A', index: 7, input: 'Web is Awesome Awesome', groups: undefined]
+console.log(myStr.match(/[A-Z]/)); // ['W', index: 0, input: 'Web is Awesome Awesome', groups: undefined]
 
-//>>slice(startIndex, endIndex)
-//returns a portion of the original string
-console.log(myStr.slice(7, 14));
+// use with 'g' to get all matches without their position info
+console.log(myStr.match(/[A-Z]/g)); // ['W', 'A', 'A']
 
-//>>split('seperator')
-//splits string based on a seperator and returns an array of values
-console.log(myStr.split(' '));
+// improper escaping can cause unintended matches
+console.log('123'.match('1.3')); // ['123', index: 0, input: '123', groups: undefined]
+// always escpate special chars with double slash
+console.log('123'.match('1\\.3')); // null
+
+//>>matchAll(regexp || '')
+// returns an iterator with matched strings and their positions
+console.log(...myStr.matchAll('A'));
+// ['A', index: 7, input: 'Web is Awesome Awesome', groups: undefined]0: "A"groups: undefinedindex: 7input: "Web is Awesome Awesome"length: 1[[Prototype]]: Array(0) ['A', index: 15, input: 'Web is Awesome Awesome', groups: undefined]
+
+const matches = 'table football, foosball'.matchAll(/foo[a-z]*/g);
+for (const match of matches) {
+  console.log(`Found ${match[0]} start=${match.index} end=${match.index + match[0].length}.`);
+}
+// Found football start=6 end=14.
+// Found foosball start=16 end=24.
+
+// have to add the 'g' flag in case of regex else exception is thrown
+console.log(...myStr.matchAll(/[A-Z]/g));
+// ['W', index: 0, input: 'Web is Awesome Awesome', groups: undefined] ['A', index: 7, input: 'Web is Awesome Awesome', groups: undefined] ['A', index: 15, input: 'Web is Awesome Awesome', groups: undefined]
+
+//>>RegExp.test('str')
+// returns true if there is a match; false otherwise.
+const reg = new RegExp('^hello', 'i');
+console.log(reg.test('hello world!')); // true
+console.log(/^hello/i.test('ello world!')); // false
+
+// test() called multiple times on the same global regular expression instance will advance past the previous match.
+const regex = /[A-Z]/g;
+let matched = regex.test('This Is A New Web');
+console.log('## regex lastIndex: ', regex.lastIndex); // 1
+
+while (matched) {
+  matched = regex.test('This Is A New Web');
+  console.log('## regex lastIndex: ', regex.lastIndex); // 6, 9, 11, 15, 0
+}
+/* Note:
+1. If you only care whether the regex matches a string, but not what is actually being matched, use RegExp.prototype.test() instead.
+
+2. If you are finding all occurrences of a global regex and you don't care about information like capturing groups, use String.prototype.match() instead. In addition, String.prototype.matchAll() helps to simplify matching multiple parts of a string (with capture groups) by allowing you to iterate over the matches.
+
+3. If you are executing a match to find its index position in the string, use the String.prototype.search() method instead.
+*/
+
+//>>split('char' || regex, limit)
+//splits string based on a char and returns an array of values without including separator in the results
+console.log(myStr.split(' ')); // ['Web', 'is', 'Awesome', 'Awesome']
+console.log(myStr.split(/\s/)); // ['Web', 'is', 'Awesome', 'Awesome']
+// limit -> limits the no. of arrays elements created
+console.log(myStr.split(' ', 2)); // ['Web', 'is']
+
+console.log('Hello 1 word. Sentence number 2.'.split(/\d/)); // ['Hello ', ' word. Sentence number ', '.']
+// If separator is a regular expression that contains capturing parentheses ( ), matched results are included in the array.
+console.log('Hello 1 word. Sentence number 2.'.split(/(\d)/)); // ['Hello ', '1', ' word. Sentence number ', '2', '.']
 
 //>>trim()
 //removes whitespace characters
 const strr = '       Hello       ';
-console.log(strr);
 //removes from both front and back
-console.log(strr.trim());
+console.log(strr.trim()); // Hello
 //only front
-console.log(strr.trimStart());
+console.log(strr.trimStart()); // Hello (spaces)
 //only back
-console.log(strr.trimEnd());
+console.log(strr.trimEnd()); // (spaces) Hello
 
 //>>toString()
 //returns a string representation of the specified object
@@ -432,7 +562,7 @@ const strObj = new String('Hello');
 console.log(strObj);
 console.log(strObj.toString());
 
-//>>localCompare()
+//>>str1.localCompare(str2)
 //returns +ve if the ref string comes after the compare string
 //returns -ve if the ref string comes before the compare string
 //for sorting strings
@@ -446,6 +576,18 @@ console.log(strr1.localeCompare(strr2));
 console.log(myStr.padEnd(myStr.length + 5, '.'));
 //padStart(count, val)
 console.log(myStr.padStart(myStr.length + 5, '.'));
+
+//>>startsWith('str', startIndex)
+// start - inclusive
+console.log('hello'.startsWith('he')); // true
+console.log('hello'.startsWith('He')); // false
+console.log('hello world'.startsWith('wor', 6)); // true
+
+//>>endsWith('str', endIndex)
+// end - exclusive
+console.log('hello'.endsWith('lo')); // true
+console.log('hello'.endsWith('Lo')); // false
+console.log('hello world'.endsWith('rld', 11)); // true
 //*
 
 //*Immutability Tests
@@ -629,7 +771,7 @@ myMap.set(mapFun, function () {
 console.log(myMap.get(mapVar));
 console.log(myMap.get(mapString));
 console.log(myMap.get(mapObj));
-console.log(myMap.get(mapFun)());
+console.log(myMap.get(mapFun)()); // 5
 
 //>>has(key)
 console.log(myMap.has(mapString));
@@ -641,11 +783,17 @@ console.log(myMap);
 
 const newMap = new Map();
 newMap.set('one', 1);
-//duplicate keys not allowed
-newMap.set('one', 1);
+//duplicate key override any existing key
+newMap.set('one', 11);
 newMap.set('two', 2);
 newMap.set('three', 3);
 newMap.set('four', 4);
+/*
+0: {"one" => 11}
+1: {"two" => 2}
+2: {"three" => 3}
+3: {"four" => 4}
+*/
 console.log(newMap);
 
 //>>using forEach()
@@ -676,6 +824,7 @@ for (const [key, val] of mapIterator3) {
   console.log(key + ': ' + val);
 }
 
+// get the size of the map (same as arr.length)
 console.log(newMap.size);
 
 //>>Relation with Arrays
@@ -685,6 +834,10 @@ const mpArray = [
 ];
 const arrMap = new Map(mpArray);
 console.log(arrMap);
+/*
+0: {"key1" => "val1"}
+1: {"key2" => "val2"}
+*/
 console.log(Array.from(arrMap));
 //or//spread operator converts the map into an array
 console.log(...new Map(mpArray));
@@ -741,12 +894,12 @@ const visitsCountMap1 = new Map();
 //john is the key for the map
 visitsCountMap1.set(john1, 123);
 
-//now john leaves us, we don't need him anymore
 console.log(visitsCountMap1); //1 obj
+//now john leaves us, we don't need him anymore
 john1 = null;
 
 //but it's still in the map, we need to clean it!
-//john1 will not be gc'd since the map still has a refernce to it
+//john1 will not be gc'd since the map still has a reference to it
 console.log(visitsCountMap1); //1 obj
 //and john is also in the memory, because Map uses it as the key
 
@@ -758,7 +911,7 @@ const visitsCountMap2 = new WeakMap();
 visitsCountMap2.set(john2, 123);
 
 //now john leaves us, we don't need him anymore
-console.log(visitsCountMap2); //none it's gc'd but value remains
+console.log(visitsCountMap2);
 john2 = null;
 
 //john2 is removed from the map beacuse of weak reference
@@ -770,8 +923,8 @@ console.log(visitsCountMap2); //none it's gc'd but value remains
 //*Set
 console.log('=======================Set=======================');
 //          Map                  |               Set
-//Duplicate keys not allowed but | Duplicate values/keys not allowed
-//duplicate values allowed       | In set the key is same as value
+//Duplicate keys override existing keys  | Duplicate values/keys not allowed
+//Duplicate values allowed    | In set the key is same as value
 
 const mySet = new Set();
 const setObj = { a: 1, b: 2 };
@@ -783,15 +936,14 @@ mySet.add(setObj);
 mySet.add(function () {
   return 'Fun in Set';
 });
-console.log(mySet);
+console.log(mySet); // Set(4) {20, 'Yolo', {…}, ƒ}
 
 //>>has()
 console.log(mySet.has('Yolo')); //true
 console.log(mySet.has({})); //false
 console.log(mySet.has({ a: 1, b: 2 })); //false
 console.log(mySet.has(setObj)); //true
-
-console.log(mySet.size);
+console.log(mySet.size); // 4
 
 //>>delete()
 mySet.delete(20);
@@ -805,6 +957,7 @@ newSet.forEach(function (val1, val2) {
   console.log(val1 + ': ' + val2);
 });
 console.log(newSet[1]);
+
 //>>keys()
 //returns iteratator obj with keys
 const setIterator1 = newSet.keys();
@@ -872,16 +1025,16 @@ jackSet1.add(jack1);
 console.log(jackSet1); //1 obj
 
 jack1 = null;
-console.log(jackSet1); //1 obj
+console.log(jackSet1); //1 obj (object not gc'd)
 
 //WeakSet
-let jack2 = { name: 'Jack' };
+let jackObj = { name: 'Jack' };
 const jackSet2 = new WeakSet();
 
-jackSet2.add(jack2);
-console.log(jackSet2); //none it's gc'd
+jackSet2.add(jackObj);
+console.log(jackSet2);
 
-jack2 = null;
+jackObj = null;
 console.log(jackSet2); //none it's gc'd
 
 //>>use case
@@ -929,9 +1082,9 @@ const copyArr = [...org];
 console.log(copyArr);
 
 //concat arrays
-const ar1 = [1, 2, 3, 4];
-const ar2 = [5, 6];
-const full = [...ar1, ...ar2];
+const arrr1 = [1, 2, 3, 4];
+const arrr2 = [5, 6];
+const full = [...arrr1, ...arrr2];
 console.log(full);
 
 //object cloning and merging
@@ -975,9 +1128,9 @@ console.log('=======================Destructuring=======================');
 const array1 = [1, 2, 3, 4, 5, 6];
 //syntax [t1, t2, ..] = source
 const [m1, m2, ...m3] = array1;
-console.log(m1);
-console.log(m2);
-console.log(m3);
+console.log(m1); // 1
+console.log(m2); // 2
+console.log(m3); // [3, 4, 5, 6]
 
 //assigning defaults else undefined
 const array2 = [1, 2];
@@ -1107,9 +1260,9 @@ for (const {
 //with spread
 const desObj5 = { r1: 1, r2: 2, r3: 3, r4: 4, r5: 5 };
 const { r1, r2, ...all } = desObj5;
-console.log(r1);
-console.log(r2);
-console.log(all);
+console.log(r1); // 1
+console.log(r2); // 2
+console.log(all); // {r3: 3, r4: 4, r5: 5}
 
 //array object destructuring
 const props = [

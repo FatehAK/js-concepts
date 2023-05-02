@@ -156,7 +156,8 @@ tContainer.addEventListener(
   'scroll',
   _.throttle(function () {
     console.log('called');
-    if (tContainer.scrollHeight <= tContainer.clientHeight + tContainer.scrollTop + 300) {
+    if (tContainer.clientHeight + tContainer.scrollTop >= tContainer.scrollHeight - 10) {
+      console.log('adding items');
       const itemsDup = document.querySelector('.items').cloneNode(true);
       tContainer.appendChild(itemsDup);
     }

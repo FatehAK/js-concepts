@@ -19,7 +19,7 @@ console.log(iter1.next()); //10
 console.log(iter1.next()); //11
 console.log(iter1.next()); //12
 console.log(iter1.next()); //13
-console.log(iter1.next()); //undefined
+console.log(iter1.next()); //undefined, { done: true }
 console.log('\n');
 
 //>>yield*
@@ -124,12 +124,12 @@ const itString = 'Hello';
 //Symbol.iterator for string is defined in its prototype so no need to define it just call it directly
 const iter5 = itString[Symbol.iterator]();
 
-console.log(iter5.next());
-console.log(iter5.next());
-console.log(iter5.next());
-console.log(iter5.next());
-console.log(iter5.next());
-console.log(iter5.next());
+console.log(iter5.next()); // h
+console.log(iter5.next()); // e
+console.log(iter5.next()); // l
+console.log(iter5.next()); // l
+console.log(iter5.next()); // o
+console.log(iter5.next()); // undefined, done: true
 //same as
 //   |
 //   V

@@ -7,20 +7,22 @@ const eObj = {
     return this.values[0];
   },
   set sVal(val) {
-    this.values[3] = val;
+    this.values[0] = val;
   },
 };
 
-console.log(eObj.gVal);
+console.log(eObj.gVal); // 'a'
 eObj.sVal = 'Yo';
-console.log(eObj);
-console.log('eObj:', eObj);
+console.log(eObj.gVal); // 'Yo'
 
 //>>object creation using Object() constructor
 const pObj = new Object({
   name: 'Chris',
   age: 38,
 });
+
+// creating a new object using object.create
+console.log(Object.create({}, { foo: { value: 1 } })); // { foo: 1 }
 
 const e1 = { a: 1, b: 2 };
 //create a object and adds the passed object properties as the object's prototype
@@ -37,28 +39,54 @@ Object.defineProperties(e2, {
   },
 });
 e2.c = 5;
+/*
+foo: 5,
+bar: 3,
+c: 5,
+[[Prototype]]: Object
+  a: 1,
+  b: 2
+*/
 console.log(e2);
+
 const iterObj = Object.keys(e2);
 for (const key of iterObj) {
   console.log(key); // bar, c
 }
+/*
+  hasOwnProperty - checks object's own props alone
+  in - checks for own props, if not found then travels up the entire prototype chain
+*/
 console.log(e2.hasOwnProperty('foo')); //true
 console.log(e2.hasOwnProperty('a')); //false - prototype property
 console.log(e2.hasOwnProperty('b')); //false - prototype property
+console.log('a' in e2); //true - prototype property
+console.log('b' in e2); //true - prototype property
+console.log('hasOwnProperty' in e2); //true - prototype property
 
-//>>Object creation using another object (added to prototype)
-const fObj = {
-  firstName: 'Joyce',
-  lastName: 'Jameson',
-  fullName() {
-    return this.firstName + ' ' + this.lastName;
-  },
+/* Object.keys() vs for...in
+
+Object.keys() - only own props traversed
+for...in - if obj has prototype props then they are traversed as well
+*/
+const myObject = {
+  a: 1,
+  b: 2,
+  c: 3,
 };
 
-const newObj = Object.create(fObj);
-newObj.firstName = 'Jamie';
-console.log(newObj.fullName());
-console.log(newObj);
+// setting the object's prototype
+// myObject.__proto__ = {
+//   d: 4,
+//   e: 5,
+// };
+Object.setPrototypeOf(myObject, { d: 4, e: 5 });
+
+console.log('keys: ', Object.keys(myObject)); // [a, b, c]
+
+for (let key in myObject) {
+  console.log('key: ', key); // key: a, key: b, key: c, key: d, key: e
+}
 
 //>>Object assignment
 //source object overrides contents of the target
@@ -75,14 +103,13 @@ const target = {
 
 const returnedTarget = Object.assign(target, source);
 
-console.log(source);
-console.log(target);
-console.log(returnedTarget);
+console.log(source); // { b: 4, c: 5 }
+console.log(target); // { a: 1, b: 4, c: 5 }
+console.log(returnedTarget); // { a: 1, b: 4, c: 5 }
 
 //>>modify or add property/properties
 const gObj = {
   firstName: 'Jon',
-  lastName: 'Jones',
 };
 
 console.log(gObj);
@@ -90,15 +117,14 @@ Object.defineProperty(gObj, 'middleName', {
   value: 'Jolly',
   enumerable: true,
 });
-console.log(gObj);
 Object.defineProperties(gObj, {
-  finalName: {
+  lastName: {
     value: 'Jameson',
     enumerable: true,
   },
   getName: {
     value: function () {
-      return this.firstName + ' ' + this.middleName + ' ' + this.lastName + ' ' + this.finalName;
+      return this.firstName + ' ' + this.middleName + ' ' + this.lastName;
     },
   },
 });
@@ -135,28 +161,27 @@ Person.prototype.proProp = "I'm from prototype object";
 const pObj1 = new Person('Jake');
 const pObj2 = new Person('Sammy');
 
-pObj1.greeting();
-//modify own property
-pObj1.name = 'Sam';
-pObj1.greeting();
+pObj1.greeting(); // Hi Jake
+pObj1.name = 'Sam'; // modify own property
+pObj1.greeting(); // Hi Sam
 
-console.log(pObj1.proProp); //I'm from prototype object
-console.log(pObj1);
-//this object modifies the prototype property so a new custom independent property added to object itself
+console.log(pObj1.proProp); // I'm from prototype object
+// this object modifies the prototype property so a new custom independent property added to object itself
 pObj2.proProp = 'Foo';
-console.log(pObj2.proProp); //'Foo'
-console.log(pObj2);
+console.log(pObj2.proProp); // 'Foo'
 
-console.log(pObj1.valueOf());
-console.log(pObj1.__proto__);
-console.log(pObj1.__proto__.__proto__);
+console.log(pObj1.valueOf()); // Person {name: 'Sam', greeting: ƒ}
+console.log(pObj1.__proto__); // {proProp: "I'm from prototype object", constructor: ƒ}
+console.log(pObj1.__proto__.__proto__); // {constructor: ƒ, __defineGetter__: ƒ, __defineSetter__: ƒ, hasOwnProperty: ƒ, __lookupGetter__: ƒ, …}
 
-//returns the prototype object of the specified object
-console.log(Object.getPrototypeOf(pObj1));
-//the data within the prototype object
-console.log(Person.prototype);
-//get names of all properties on the object
-console.log(Object.getOwnPropertyNames(pObj1));
+// returns the prototype object of the specified object
+console.log(Object.getPrototypeOf(pObj1)); // {proProp: "I'm from prototype object", constructor: ƒ}
+// the data within the prototype object
+console.log(Person.prototype); // {proProp: "I'm from prototype object", constructor: ƒ}
+
+// get names of all properties on the object
+console.log(Object.getOwnPropertyNames(pObj1)); // ['name', 'greeting']
+
 //returns property configuration for the object
 //config - 'true' means whether below props can be changed or property can be deleted
 //enum - 'true' means the property will showup in count for loop
@@ -166,12 +191,12 @@ console.log(Object.getOwnPropertyDescriptors(pObj1));
 
 //true is property there on obj; false if inherited (prototype) property
 //does not check the prototype chain
-console.log(pObj1.hasOwnProperty('greeting'));
-console.log(pObj1.hasOwnProperty('proProp'));
+console.log(pObj1.hasOwnProperty('greeting')); // true
+console.log(pObj1.hasOwnProperty('proProp')); // false
 
 //'in' checks the property in prototype chain as well
-console.log('proProp' in pObj1);
-console.log('greeting' in pObj1);
+console.log('proProp' in pObj1); // true
+console.log('greeting' in pObj1); // true
 
 //'instanceof' checks if object exists in another object prototype chain
 console.log(pObj1 instanceof Person); //true
@@ -179,9 +204,8 @@ console.log(pObj1 instanceof Object); //true
 console.log(pObj1 instanceof Array); //false
 
 let myArray = ['1', '2'];
-console.log(myArray.__proto__);
-console.log(myArray.__proto__.__proto__);
-console.log(Object.getPrototypeOf(myArray));
+console.log(myArray.__proto__); // [constructor: ƒ, at: ƒ, concat: ƒ, copyWithin: ƒ, fill: ƒ, …]
+console.log(myArray.__proto__.__proto__); // {constructor: ƒ, __defineGetter__: ƒ, __defineSetter__: ƒ, hasOwnProperty: ƒ, __lookupGetter__: ƒ, …}
 
 //>>The prototype chain
 // Let's create an object o from function f with its own properties a and b:
@@ -202,7 +226,7 @@ F.prototype.c = 4;
 // This is the end of the prototype chain, as null,
 // by definition, has no [[Prototype]].
 // Thus, the full prototype chain looks like:
-// {a: 1, b: 2} ---> {b: 3, c: } ---> Object.prototype ---> null
+// {a: 1, b: 2} ---> {b: 3, c: 4} ---> Object.prototype ---> null
 
 console.log(o.a); // 1
 // Is there an 'a' own property on o? Yes, and its value is 1.
@@ -212,7 +236,7 @@ console.log(o.b); // 2
 // The prototype also has a 'b' property, but it's not visited.
 // This is called 'Property Shadowing'
 
-console.log(o.c); //
+console.log(o.c); // 4
 // Is there a 'c' own property on o? No, check its prototype.
 // Is there a 'c' own property on o.[[Prototype]]? Yes, its value is 4.
 
@@ -233,37 +257,6 @@ console.log('=====================Function Level Inheritance====================
 //   v
 // Child
 
-//>>>Non Parameterized Constructor
-function MyConstructor() {
-  this.fname = 'Jack';
-  this.lname = 'Jonas';
-}
-
-MyConstructor.prototype.getName = function () {
-  return 'Name is: ' + this.fname + ' ' + this.lname;
-};
-
-function MyChild(age) {
-  MyConstructor.call(this);
-  this.age = age;
-}
-
-//Set Child's prototype to be Parent's prototype
-MyChild.prototype = Object.create(MyConstructor.prototype);
-//reset Child's contructor so that it points to itself
-MyChild.prototype.constructor = MyChild;
-
-MyChild.prototype.getAge = function () {
-  return 'Age is: ' + this.age;
-};
-
-const nonParaObj = new MyChild(12);
-console.log(nonParaObj.fname + ' ' + nonParaObj.lname);
-console.log(nonParaObj.getName());
-console.log(nonParaObj.age);
-console.log(nonParaObj.getAge());
-
-//>>>>Parameterized Constructor
 function Parent(fname, lname) {
   this.fname = fname;
   this.lname = lname;
@@ -289,7 +282,7 @@ function Child(fname, lname, age) {
 //let the Child prototype refer to the new object created that has methods defined in Parent.prototype
 //note : it make the constructor and the protoype property enumerable(appears in for..in loop)
 Child.prototype = Object.create(Parent.prototype);
-//Now the Child constructor is set to Parent Constructor so we reset it
+//Now the Child constructor is set to Parent Constructor so we reset it back to itself
 Child.prototype.constructor = Child;
 
 Child.prototype.getAge = function () {
@@ -298,24 +291,23 @@ Child.prototype.getAge = function () {
 };
 
 const childObj = new Child('Jack', 'Samson', 34);
-console.log(childObj.getFullName());
-console.log(childObj.getAge());
-console.log(childObj.fname);
-console.log(childObj);
-console.log(childObj.__proto__);
-console.log(childObj.__proto__.__proto__);
-console.log(childObj.__proto__.__proto__.__proto__);
-console.log(Parent.prototype);
-console.log(Child.prototype);
-console.log(childObj instanceof Parent);
-//checks if an object exists in another object's prototype chain
-console.log(Parent.prototype.isPrototypeOf(childObj));
+console.log(childObj.getFullName()); // Jack Samson
+console.log(childObj.getAge()); // Jack Samson 34
+console.log(childObj.fname); // Jack
+console.log(childObj.__proto__); // Parent {constructor: ƒ, getAge: ƒ}
+console.log(childObj.__proto__.__proto__); // {getFullName: ƒ, constructor: ƒ}
+console.log(childObj.__proto__.__proto__.__proto__); // {constructor: ƒ, __defineGetter__: ƒ, __defineSetter__: ƒ, hasOwnProperty: ƒ, __lookupGetter__: ƒ,  …}
+console.log(Child.prototype); // Parent {constructor: ƒ, getAge: ƒ}
+console.log(Parent.prototype); // {getFullName: ƒ, constructor: ƒ}
+console.log(childObj instanceof Parent); // true
+// checks if an object exists in another object's prototype chain
+console.log(Parent.prototype.isPrototypeOf(childObj)); // true
 
 //>>>>A hybrid mix of 'this' and prototype
 /**
  * 1. If your methods do not use local variables defined in your constructor then use the prototype approach.
- * 2. If you're creating lots of Dogs, use the prototype approach. This way, all "instances" (i.e. objects created by the Dog constructor) will share one set of functions, whereas      the constructor way, a new set of functions is created every time the Dog constructor is called, using more memory.
- * 3. If you're creating a small number of Dogs and find that using local, "private" variables in your constructor improves your code, this may be the better approach. Use your         judgment and do some benchmarks if performance or memory consumption are major concerns.
+ * 2. If you're creating lots of Dogs, use the prototype approach. This way, all "instances" (i.e. objects created by the Dog constructor) will share one set of functions, whereas the constructor way, a new set of functions is created every time the Dog constructor is called, using more memory.
+ * 3. If you're creating a small number of Dogs and find that using local, "private" variables in your constructor improves your code, this may be the better approach. Use your judgment and do some benchmarks if performance or memory consumption are major concerns.
  */
 function AngryDog(name) {
   this.name = name;
@@ -324,7 +316,7 @@ function AngryDog(name) {
 
   this.bark = function () {
     barkCount++;
-    console.log(this.name + ' bark');
+    console.log(this.name + ' barked');
   };
 
   this.getBarkCount = function () {
@@ -337,19 +329,10 @@ AngryDog.prototype.wagTail = function () {
 };
 
 const myDog1 = new AngryDog('Buster');
-myDog1.bark();
-myDog1.bark();
-myDog1.getBarkCount();
-myDog1.wagTail();
-console.log(myDog1);
-
-const myDog2 = new AngryDog('Mojo');
-myDog2.bark();
-myDog2.bark();
-myDog2.getBarkCount();
-myDog2.wagTail();
-console.log(myDog2);
-console.log(AngryDog.prototype);
+myDog1.bark(); // Buster barked
+myDog1.bark(); // Buster barked
+myDog1.getBarkCount(); // Buster has barked 2 times
+myDog1.wagTail(); // Buster wagging tail
 
 //>>Heirarchical Inheritance
 //    Animal
@@ -389,17 +372,17 @@ Dog.prototype.bark = function () {
 };
 
 const catObj = new Cat('Shiny', 3);
-console.log(catObj.eat());
-console.log(catObj.meow());
+console.log(catObj.eat()); // Shiny eats.
+console.log(catObj.meow()); // Shiny meows... with age 3
 
 const dogObj = new Dog('Max', 8);
-console.log(dogObj.eat());
-console.log(dogObj.bark());
+console.log(dogObj.eat()); // Max eats.
+console.log(dogObj.bark()); // Shiny barks... with age 8
 
-console.log(Animal.prototype);
-console.log(Cat.prototype);
-console.log(Dog.prototype);
-console.log(catObj instanceof Animal); //true
+console.log(Animal.prototype); // {eat: ƒ, constructor: ƒ}
+console.log(Cat.prototype); // Animal {constructor: ƒ, meow: ƒ}
+console.log(Dog.prototype); // Animal {constructor: ƒ, bark: ƒ}
+console.log(catObj instanceof Animal); // true
 
 //>>Multilevel Inheritance
 // Animal
@@ -431,30 +414,29 @@ BigDog.prototype.bark = function () {
 };
 
 function PuppyDog(name, age) {
-  AnimalBase.call(this, name);
-  this.age = age;
+  BigDog.call(this, name, age);
 }
 
 PuppyDog.prototype = Object.create(BigDog.prototype);
 PuppyDog.prototype.constructor = PuppyDog;
 
 PuppyDog.prototype.cry = function () {
-  return this.name + ' cries... with age ' + this.age;
+  return this.name + ' cries...';
 };
 
 const bigDogObj = new BigDog('Grumpy', 10);
-console.log(bigDogObj.eat());
-console.log(bigDogObj.bark());
+console.log(bigDogObj.eat()); // Grumpy eats.
+console.log(bigDogObj.bark()); // Grumpy barks... with age 10
 
 const puppyDogObj = new PuppyDog('Maxie', 3);
-console.log(puppyDogObj.eat());
-console.log(puppyDogObj.bark());
-console.log(puppyDogObj.cry());
+console.log(puppyDogObj.eat()); // Maxie eats.
+console.log(puppyDogObj.bark()); // Maxie barks... with age 3
+console.log(puppyDogObj.cry()); // Maxie cries...
 
-console.log(AnimalBase.prototype);
-console.log(BigDog.prototype);
-console.log(PuppyDog.prototype);
-console.log(puppyDogObj instanceof AnimalBase);
+console.log(AnimalBase.prototype); // {eat: ƒ, constructor: ƒ}
+console.log(BigDog.prototype); // AnimalBase {constructor: ƒ, bark: ƒ}
+console.log(PuppyDog.prototype); // BigDog {constructor: ƒ, cry: ƒ}
+console.log(puppyDogObj instanceof AnimalBase); // true
 //*
 
 //*Object Level Inheritance
@@ -664,6 +646,6 @@ class MyRectangle extends Shape {
   }
 }
 
-const rectObj = new MyRectangle(100, 100, 'Rectangle');
-console.log(rectObj.getShape());
+const rectObj = new MyRectangle(10, 10, 'Rectangle');
+console.log(rectObj.getShape()); // The shape is Rectangle Area is 10000
 //*

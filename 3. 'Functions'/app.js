@@ -12,7 +12,7 @@ function outerFun1(param) {
   let outerBottom = 'From Bottom';
   innerFun();
 }
-outerFun1('From Parameter');
+outerFun1('From Parameter'); // From Top->From Bottom->From Parameter
 
 //>>inner function has access to variables even after outer function has returned
 //local variables are not copied they are kept by reference
@@ -26,8 +26,8 @@ function outerFun2(param) {
   return innerFun;
 }
 
-let myInner = outerFun2('Jameson'); //outer function has returned at this point
-myInner();
+let myInner = outerFun2('Jameson'); // outer function has returned at this point
+myInner(); // Jones Jameson
 
 //>>using closures to define private members
 function outerFun3() {
@@ -49,6 +49,7 @@ retObj.setMember(2000);
 console.log(retObj.getMember());
 
 //>>closure problem with loops
+// the 'i' variable exists in a single shared scope so when the inner function eventually runs, it get the last assigned value -> 3
 function outerFun4(objParam) {
   var myID = 100;
 
@@ -77,7 +78,7 @@ let retObj1 = outerFun4(myObj1);
 
 for (let val of retObj1) {
   console.log(val.name + ': ' + val.id());
-}
+} // Jackson: 103, Samson: 103, Mason: 103
 console.log('\n');
 
 //>>>>solved by using IIFE
@@ -85,6 +86,7 @@ function outerFun5(objParam) {
   var myID = 100;
 
   for (var i = 0; i < objParam.length; i++) {
+    // a temp scope created to bypass the issue with var
     objParam[i].id = (function (j) {
       return myID + j;
     })(i);
@@ -109,7 +111,7 @@ let retObj2 = outerFun5(myObj2);
 
 for (let val of retObj2) {
   console.log(val.name + ': ' + val.id);
-}
+} // Jackson: 101, Samson: 102, Mason: 103
 console.log('\n');
 
 //>>>>solved by using let
@@ -142,7 +144,7 @@ let retObj3 = outerFun6(myObj3);
 
 for (let val of retObj3) {
   console.log(val.name + ': ' + val.id());
-}
+} // Jackson: 101, Samson: 102, Mason: 103
 
 //>>closure created on each call to outerfunction
 function outerFun7(myVal) {
@@ -155,10 +157,10 @@ function outerFun7(myVal) {
 
 //closure 1
 let myInnerFun1 = outerFun7(100);
-myInnerFun1();
+myInnerFun1(); // 100
 //closure 2
 let myInnerFun2 = outerFun7(200);
-myInnerFun2();
+myInnerFun2(); // 200
 //*
 
 //*Callback functions
@@ -168,26 +170,19 @@ console.log('=======================Callback=======================');
 //>>basic callback
 function myFunction1(callbackFun) {
   let myVal = 100;
-  console.log('Hello');
   callbackFun(myVal);
 }
-
-myFunction1(callbackFun);
 
 function callbackFun(val) {
   console.log('Hello from callback ' + val);
 }
 
-//or
-function myFunction2(cb) {
-  let myVal = 100;
-  console.log('Hello');
-  cb(myVal);
-}
+myFunction1(callbackFun); // Hello from callback 100
 
-myFunction2(function (val) {
+//or inline it
+myFunction1(function (val) {
   console.log('Hello from callback ' + val);
-});
+}); // Hello from callback 100
 
 //>>problem of callbacks with objects
 //solved using .call() or .apply()
@@ -205,8 +200,8 @@ function getUserName(fname, lname, cb, obj) {
 
 //pass the object as well to set the 'this' value
 getUserName('Rick', 'Devoe', myObject.setUserName, myObject);
-console.log(myObject.fullname);
-console.log(window.fullname);
+console.log(myObject.fullname); // Rick Devoe
+console.log(window.fullname); // undefined
 
 //>>multiple callbacks
 function mulFun(param, cb1, cb2) {
@@ -278,25 +273,28 @@ let varIIFE = (function () {
 //if the preceding line is a function exp and does not have a semi colon
 //then the IIFE will be executed as a parameter as part of that function
 //called the leading defensive semi colon
-(function () {
+
+/*
+;(function () {
   console.log('Hello from ;');
 })();
+*/
 
 //>>using IIFE within ternary operator
 //condition? true : false
 function terFun(bool) {
   let docTitle = bool
-    ? (function () {
+    ? (() => {
         return 'Title1';
       })()
-    : (function () {
+    : (() => {
         return 'Title2';
       })();
   console.log(docTitle);
 }
 
-terFun(true);
-terFun();
+terFun(true); // Title1
+terFun(); // Title2
 //*
 
 //*Short circuiting
