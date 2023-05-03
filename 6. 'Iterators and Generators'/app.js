@@ -1,4 +1,4 @@
-//*Generator
+//# Generator
 console.log('=======================Generator=======================');
 //Generators are functions which can be exited and later re-entered
 //Their context is saved across re-entrances
@@ -106,9 +106,9 @@ console.log(customersGenerator.next().value);
 console.log(customersGenerator.next().value);
 console.log(customersGenerator.next().value);
 console.log('\n');
-//*
+//#
 
-//*Iterator and Iterables
+//# Iterator and Iterables
 console.log('=======================Iterator and Iterables=======================');
 //An object is an iterator when it implements a next() method with -->
 //done--> 'false' if next value in sequence available | 'true' if next value not available
@@ -254,4 +254,4 @@ console.log(...iter9); //wont work now since iteration is complete
 for (const a of iter9) {
   console.log(a); //wont work now since iteration is complete
 }
-//*
+//#

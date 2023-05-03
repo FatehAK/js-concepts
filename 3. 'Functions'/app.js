@@ -1,4 +1,4 @@
-//*Closures
+//# Closures
 console.log('=======================Closures=======================');
 
 //>>inner function has access to any variable within the scope also the parameters
@@ -161,9 +161,9 @@ myInnerFun1(); // 100
 //closure 2
 let myInnerFun2 = outerFun7(200);
 myInnerFun2(); // 200
-//*
+//#
 
-//*Callback functions
+//# Callback functions
 console.log('=======================Callback=======================');
 //Any function passed as an argument; gennerally executed at a later stage
 
@@ -223,9 +223,9 @@ mulFun(
     console.log('Nope Failure');
   }
 );
-//*
+//#
 
-//*IIFE
+//# IIFE
 console.log('=======================IIFE=======================');
 
 (function () {
@@ -295,9 +295,9 @@ function terFun(bool) {
 
 terFun(true); // Title1
 terFun(); // Title2
-//*
+//#
 
-//*Short circuiting
+//# Short circuiting
 console.log('=======================Short Circuiting=======================');
 //use of &&, ||
 function opFun1(param) {
@@ -342,9 +342,9 @@ function opFun3(myTitle) {
 }
 
 console.log(opFun3('Hello World'));
-//*
+//#
 
-//*Function currying
+//# Function currying
 console.log('=======================Currying=======================');
 //currying transforms a function into a sequence of functions each taking a single argument of the function
 //use currying if you want to pass params later and seperately in your program
@@ -464,9 +464,9 @@ todayLog('INFO', 'message');
 //fix second parameter
 let todayDebug = todayLog('DEBUG');
 todayDebug('message');
-//*
+//#
 
-//*Memoization
+//# Memoization
 console.log('=======================Memoization=======================');
 //no caching
 function add(param) {
@@ -633,4 +633,4 @@ console.time('t20');
 console.log('11 :' + fibMemoize(11));
 console.timeEnd('t20');
 console.log(cacheFib);
-//*
+//#

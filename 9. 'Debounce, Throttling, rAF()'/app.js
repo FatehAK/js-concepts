@@ -11,7 +11,7 @@
 
 'use strict';
 
-//*Debouncing
+//# Debouncing
 //allows us to group multiple sequential calls to a single call
 //Grouping a sudden burst of events (like keystrokes or scrolls) into a single one.
 //gives a layer of control between the event and the execution of the function
@@ -136,7 +136,7 @@ function customDebounce(fun, wait = 1, immediate = false) {
 //     console.log('Custom Debounce - Scroll');
 // }, 2000, true));
 
-//*Throttling
+//# Throttling
 //allows us to control the execution of the function by making it execute at particual intervals
 //eg. in an infinite scrolling app like twitter check every 200ms the scroll position and if the user is near the bottom load more content
 //>>scroll
@@ -199,7 +199,7 @@ function customThrottle(fn, limit) {
 //     console.log('Custom Throttle - Scroll');
 // }, 2000));
 
-//*requestAnimationFrame()
+//# requestAnimationFrame()
 //native to the browser
 //alternative for throttling primarily used for animating stuff
 //runs every 16ms

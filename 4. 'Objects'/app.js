@@ -1,4 +1,4 @@
-//*Objects
+//# Objects
 console.log('=======================Object=======================');
 //>>object getters and setters
 const eObj = {
@@ -132,9 +132,155 @@ console.log(gObj);
 console.log(gObj.getName());
 console.log(Object.keys(gObj));
 console.log(Object.values(gObj));
-//*
 
-//*OOPS
+//>>check object equality
+/*
+Object.is() static method determines whether two values are the same value
+Two values are the same if one of the following holds:
+
+* both undefined
+* both null
+* both true or both false
+* both strings of the same length with the same characters in the same order
+* both the same object (meaning both values reference the same object in memory)
+* both BigInts with the same numeric value
+* both symbols that reference the same symbol value
+* both numbers and
+* both +0
+* both -0
+* both NaN
+* or both non-zero, not NaN, and have the same value
+
+Object.is() is not equivalent to the == operator. The == operator applies various coercions to both sides (if they are not the same type) before testing for equality (resulting in such behavior as "" == false being true), but Object.is() doesn't coerce either value.
+
+Object.is() is also not equivalent to the === operator. The only difference between Object.is() and === is in their treatment of signed zeros and NaN values. The === operator (and the == operator) treats the number values -0 and +0 as equal, but treats NaN as not equal to each other.
+*/
+console.log(Object.is('1', 1)); // false
+console.log(Object.is(NaN, NaN)); // false
+console.log(Object.is(-0, 0)); // false
+
+const objj = {};
+console.log(Object.is(objj, {})); // false
+
+console.log(Object.is(window, window)); // true
+console.log(Object.is([], [])); // false
+
+//>>prevent object modifications
+/*
+  Object.seal()
+
+  The Object.seal() static method seals an object. Sealing an object prevents extensions and makes existing properties non-configurable. A sealed object has a fixed set of properties: new properties cannot be added, existing properties cannot be removed, their enumerability and configurability cannot be changed, and its prototype cannot be re-assigned. Values of existing properties can still be changed as long as they are writable. seal() returns the same object that was passed in.
+*/
+const obj = {
+  name: 'James',
+  age: 20,
+  address: {
+    city: 'Chennai',
+    state: 'TN',
+  },
+};
+
+Object.seal(obj);
+
+// can't add new prop
+obj.gender = 'male';
+// can't delete existing prop
+delete obj.age;
+// can't modify existing property attributes
+// Object.defineProperty(obj, 'name', {  // TypeError: Cannot redefine property: name
+//   enumerable: false,
+// });
+
+// can modify existing prop
+obj.name = 'John';
+// it doesn't apply to the nested object
+obj.address.pincode = '600001';
+
+// can't add new props on the prototype
+// Object.setPrototypeOf(obj, { x: 20 }); // TypeError: #<Object> is not extensible
+// obj.__proto__ = { x: 20 }; // TypeError: #<Object> is not extensible
+console.log(obj, Object.getOwnPropertyDescriptor(obj, 'name'));
+
+const deepSeal = obj => {
+  const sealed = Object.seal(obj);
+  for (let key of Object.keys(sealed)) {
+    const value = sealed[key];
+    if (typeof value === 'object' && value !== null) {
+      deepSeal(value);
+    }
+  }
+  return obj;
+};
+
+deepSeal(obj);
+
+// prevents additon to nested props too
+obj.address.locality = 'Near bus stop';
+
+console.log('## obj: ', obj);
+console.log('## isSealed: ', Object.isSealed(obj), Object.isSealed(obj.address));
+console.log('---------');
+
+/*
+  Object.freeze()
+
+  The Object.freeze() static method freezes an object. Freezing an object prevents extensions and makes existing properties non-writable and non-configurable. A frozen object can no longer be changed: new properties cannot be added, existing properties cannot be removed, their enumerability, configurability, writability, or value cannot be changed, and the object's prototype cannot be re-assigned. freeze() returns the same object that was passed in.
+*/
+
+const obj2 = {
+  name: 'James',
+  age: 20,
+  address: {
+    city: 'Chennai',
+    state: 'TN',
+  },
+};
+
+Object.freeze(obj2);
+
+// can't add new prop
+obj2.gender = 'male';
+// can't delete existing prop
+delete obj2.age;
+// can't modify existing property attributes
+// Object.defineProperty(obj, 'name', {  // TypeError: Cannot redefine property: name
+//   writable: false,
+// });
+
+// can't modify existing prop
+obj2.name = 'John';
+// it doesn't apply to the nested object
+obj2.address.pincode = '600001';
+
+// can't add new props on the prototype
+// Object.setPrototypeOf(obj2, { x: 20 }); // TypeError: #<Object> is not extensible
+// obj2.__proto__ = { x: 20 }; // TypeError: #<Object> is not extensible
+
+console.log('## frozen obj: ', obj2);
+
+const deepFreeze = obj => {
+  const frozen = Object.freeze(obj);
+  for (let key of Object.keys(frozen)) {
+    const value = frozen[key];
+    if (typeof value === 'object' && value !== null) {
+      deepFreeze(value);
+    }
+  }
+  return obj;
+};
+
+deepFreeze(obj2);
+
+// prevents modification to nested props too
+obj2.address.pincode = '400001';
+
+console.log('## obj: ', obj2);
+console.log('## isFrozen: ', Object.isFrozen(obj2), Object.isFrozen(obj2.address));
+console.log('---------');
+
+//#
+
+//# OOPS
 console.log('=======================OOPS=======================');
 /**
  * 1. When a function is created in JavaScript, JavaScript engine adds a prototype property to the function.
@@ -246,9 +392,9 @@ console.log(o.d); // undefined
 // o.[[Prototype]].[[Prototype]] is Object.prototype and there is no 'd' property by default, check its prototype.
 // o.[[Prototype]].[[Prototype]].[[Prototype]] is null, stop searching,
 // no property found, return undefined.
-//*
+//#
 
-//*Function Level Inheritance
+//# Function Level Inheritance
 console.log('=====================Function Level Inheritance=======================');
 
 //>>Single Inheritance
@@ -437,9 +583,9 @@ console.log(AnimalBase.prototype); // {eat: ƒ, constructor: ƒ}
 console.log(BigDog.prototype); // AnimalBase {constructor: ƒ, bark: ƒ}
 console.log(PuppyDog.prototype); // BigDog {constructor: ƒ, cry: ƒ}
 console.log(puppyDogObj instanceof AnimalBase); // true
-//*
+//#
 
-//*Object Level Inheritance
+//# Object Level Inheritance
 console.log('=======================Object Level Inheritance=======================');
 /**
  * 1. The object referenced by [[Prototype]] is called a "prototype".
@@ -519,9 +665,9 @@ longEar.eatVal = false;
 console.log(longEar.eatVal);
 console.log(longEar); //eats : false
 console.log(animal); //eats : true
-//*
+//#
 
-//*ES6 Classes
+//# ES6 Classes
 //the code within classes is always executed in strict mode
 //standard class - not hoisted
 class Box {
@@ -648,4 +794,4 @@ class MyRectangle extends Shape {
 
 const rectObj = new MyRectangle(10, 10, 'Rectangle');
 console.log(rectObj.getShape()); // The shape is Rectangle Area is 10000
-//*
+//#

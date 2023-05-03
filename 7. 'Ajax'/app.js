@@ -1,6 +1,6 @@
 'use strict';
 
-//*XMLHttpRequest
+//# XMLHttpRequest
 //allows us to make asynchronous http requests
 //can be used to request any file type (e.g. plain text files, HTML files, JSON files, image files, etc.) or data from an API
 
@@ -195,9 +195,9 @@ function addArticle() {
     }, 5000);
   }
 }
-//*
+//#
 
-//*JQuery AJAX
+//# JQuery AJAX
 //>>Using the Google Translate API
 const btn8 = document.querySelector('.btn8');
 btn8.addEventListener('click', function () {
@@ -238,9 +238,9 @@ function addTranslate(response) {
     para.remove();
   }, 3000);
 }
-//*
+//#
 
-//*Fetch API
+//# Fetch API
 //fetch(url, {config})
 //retuns a Promise object which resolves to the Response object
 const btn9 = document.querySelector('.btn9');
@@ -285,4 +285,4 @@ btn9.addEventListener('click', function () {
       console.log(err);
     });
 });
-//*
+//#

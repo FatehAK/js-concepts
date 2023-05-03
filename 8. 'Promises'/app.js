@@ -1,6 +1,6 @@
 'use strict';
 
-//*Event loop
+//# Event loop
 console.log('=======================event loop=======================');
 /**In Node.js, almost all I/O is non-blocking. This includes HTTP requests, database operations and disk reads and writes.
  * 1. The single thread of execution asks the runtime to perform an operation, providing a callback function and then moves on to do something else.
@@ -70,9 +70,9 @@ console.log(foo(5));
 //     break;
 //   }
 // }
-//*
+//#
 
-//*Asynchronous
+//# Asynchronous
 //Without async if a particular code takes too long to execute or generates any errors then the code below will not be able to execute, it will simply 'block'.
 //With async even if the code takes too long to execute or if it generates errors then the code below will still be able to execute.
 //The async code is executed in the background and the results of the code are made available only after every single line of non-async code has been executed.
@@ -205,9 +205,9 @@ myloadPromise.then((script) => {
     three(); //from script three.js
 });
 */
-//*
+//#
 
-//*Promises
+//# Promises
 //Promises are replacement of callback function in asynchronous scenarios and make them easier to write
 //A Promise is an object representing the eventual completion or failure of an asynchronous operation.
 //Promises are guranteed to be resolved or rejected.
@@ -637,9 +637,9 @@ function gitFetch1() {
       }
     });
 }
-//*
+//#
 
-//*Promise API
+//# Promise API
 //>>Promise.resolve()
 //Returns a resolved promise with the given value
 //use only if the value is immediately available and can be passed
@@ -852,9 +852,9 @@ racePromise3
   .catch(err => {
     console.log(err + ': I won but I am rejected sigh...'); //3 (fast rejection!!)
   });
-//*
+//#
 
-//*Promisification
+//# Promisification
 //It’s conversion of a function that accepts a callback into a function that returns a promise.
 ///a promise may have only one result, but a callback may technically be called many times.
 //So promisification is only meant for functions that call the callback once. Further calls will be ignored.
@@ -929,9 +929,9 @@ promisified2
   .catch(err => {
     console.log(err);
   });
-//*
+//#
 
-//*Task queue
+//# Task queue
 //Two types of queues
 //1) Microtask queue
 //2) Macrotask queue
@@ -955,9 +955,9 @@ Promise.resolve()
   .then(() => {
     console.log('promise'); // (1) microtask
   });
-//*
+//#
 
-//*Aysnc & Await
+//# Aysnc & Await
 //a special syntax to work with promises in a more comfortable fashion
 
 //>>Async
@@ -1299,4 +1299,4 @@ async function gitFetchAll2() {
     }
   });
 }
-//*
+//#

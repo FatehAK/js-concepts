@@ -1,4 +1,4 @@
-//*this
+//# this
 console.log("======================='this'=======================");
 
 console.log('%c ----> Global Level', 'background: grey; color: white;');
@@ -69,10 +69,10 @@ const person = {
 console.log(person.getVal()); // undefined
 console.log(person.fullName()); // John Doe 2
 console.log(person.getVal()); // 1
-//*
+//#
 
 console.log('%c ----> Call, Apply, Bind', 'background: grey; color: white;');
-//*call, apply and bind
+//# call, apply and bind
 //main difference
 //call & apply - immediately execute the function
 //bind - returns a function for reuse
@@ -189,4 +189,4 @@ function aFun1(...myArgs) {
   console.log(myArray2); // [2, 3, 4, 5]
 }
 aFun1(1, 2, 3, 4, 5);
-//*
+//#

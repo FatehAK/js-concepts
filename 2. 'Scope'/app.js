@@ -1,4 +1,4 @@
-//*global variables
+//# global variables
 console.log('=======================global=======================');
 
 globalVal = "I'm a Global Variable";
@@ -9,9 +9,9 @@ console.log(this.globalVal); // I'm a Global Variable
 console.log(this.anotherGlobal); // I'm Global too
 console.log(this.meNoGlobal1); // undefined
 console.log(this.meNoGlobal2); // undefined
-//*
+//#
 
-//*var
+//# var
 //function scoped --> each function generates a new scope
 console.log('=======================var=======================');
 
@@ -53,9 +53,9 @@ function outerFun11() {
 
 var funa = outerFun11();
 console.log(funa()); // returned from inner function
-//*
+//#
 
-//*let
+//# let
 //block scoped --> each block genrates new scope --> accesible in sub blocks as well
 console.log('=======================let=======================');
 
@@ -104,9 +104,9 @@ function outerFun22() {
 
 let funb = outerFun22();
 console.log(funb()); // returned from inner function
-//*
+//#
 
-//*const
+//# const
 //block scoped --> each block genrates new scope --> accesible in sub blocks as well (same as let)
 console.log('=======================const=======================');
 const aConst = 'Hello';
@@ -118,9 +118,9 @@ for (let i = 0; i < 2; i++) {
   //myVal = i+1; // Type Error - Assignment
   console.log(myVal);
 }
-//*
+//#
 
-//*Hoisting
+//# Hoisting
 //technique in which decalarations are moved to the top not initializations (in case of 'var' variables and functions)
 /** Hoisting order
  * 1. 'this', 'arguments' object
@@ -209,4 +209,4 @@ function actualSomeFun(vall) {
 var vall;
 actualSomeFun(vall);
 vall = 5;
-//*
+//#
